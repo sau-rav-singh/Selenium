@@ -28,11 +28,9 @@ public class SpecBuilders {
 	
 	public static RequestSpecification requestSpecification(String requestPayload,String issueID) {
 
-		RequestSpecification authRequest = RestAssured.given().baseUri(readGlobalProperties("baseUrl")).auth()
-				.preemptive().basic("singh.saurav@icloud.com", readGlobalProperties("token"))
-				.header("Content-type", "application/json").body(requestPayload).pathParam("id", issueID);
-		
-		return authRequest;
+        return RestAssured.given().baseUri(readGlobalProperties("baseUrl")).auth()
+                .preemptive().basic("singh.saurav@icloud.com", readGlobalProperties("token"))
+                .header("Content-type", "application/json").body(requestPayload).pathParam("id", issueID);
 	}
 
 	public static ValidatableResponse responseSpecification(Response response) {

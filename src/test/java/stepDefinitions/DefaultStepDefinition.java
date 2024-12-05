@@ -9,8 +9,7 @@ public class DefaultStepDefinition {
     private String sheetName;
 
     @Given("A Workbook named {string} and sheetname as{string} is read")
-    public void a_workbook_with_name_and_sub_sheet_name_is_read(String workbookName, String sheetName)
-            throws Exception {
+    public void a_workbook_with_name_and_sub_sheet_name_is_read(String workbookName, String sheetName) {
         this.workbookName = workbookName;
         this.sheetName = sheetName;
         ExcelSheetReader reader = new ExcelSheetReader(workbookName, sheetName, 0);
