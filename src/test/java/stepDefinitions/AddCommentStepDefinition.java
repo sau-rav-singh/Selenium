@@ -7,6 +7,7 @@ import io.cucumber.java.en.When;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import org.testng.Assert;
+
 import java.util.List;
 import java.util.Map;
 
@@ -28,9 +29,7 @@ public class AddCommentStepDefinition {
     public void createAddCommentPayload(String comment, String payloadName) {
         comment = excelSheetReader.readCell(comment);
         try {
-            updatedJsonPayload = (payloadName.equals("addCommentToBug"))
-                    ? createPayload.addCommentPayload(comment)
-                    : createPayload.invalidAddCommentPayload(comment);
+            updatedJsonPayload = (payloadName.equals("addCommentToBug")) ? createPayload.addCommentPayload(comment) : createPayload.invalidAddCommentPayload(comment);
         } catch (Exception e) {
             System.out.println("Error creating payload: " + e.getMessage());
         }
@@ -50,15 +49,13 @@ public class AddCommentStepDefinition {
     }
 
     @When("The {string} request is sent with the {string} HTTP method on a non-existing IssueID as {string}")
-    public void the_request_is_sent_with_the_http_method_on_a_non_existing_issue_id_as(String resource,
-                                                                                       String httpMethod, String issueID) {
+    public void the_request_is_sent_with_the_http_method_on_a_non_existing_issue_id_as(String resource, String httpMethod, String issueID) {
         request_is_sent_with_http_method_on_issueid(resource, httpMethod, issueID);
     }
 
     @Then("Validate that the response status code is {string}")
     public void the_response_status_code_should_be_something(String responseCode) {
-        postResponse = SpecBuilders.responseSpecification(addCommentResponse).statusCode(Integer.parseInt(responseCode))
-                .extract().response().body().asString();
+        postResponse = SpecBuilders.responseSpecification(addCommentResponse).statusCode(Integer.parseInt(responseCode)).extract().response().body().asString();
     }
 
     @Then("Validate the following fields from the response:")

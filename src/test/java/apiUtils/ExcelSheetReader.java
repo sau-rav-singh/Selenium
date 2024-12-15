@@ -1,19 +1,20 @@
 package apiUtils;
 
 import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import java.io.FileInputStream;
 import java.io.IOException;
 
 public class ExcelSheetReader {
+    private static final String FILE_EXTENSION = ".xlsx";
     private final Sheet sheet;
     private final Row row;
-    private static final String FILE_EXTENSION = ".xlsx";
 
     public ExcelSheetReader(String workbookName, String sheetName, int rowNumber) {
-        try (FileInputStream fileInputStream = new FileInputStream(
-                TestConstants.DATA_FILE_PATH + workbookName + FILE_EXTENSION)) {
-            Workbook workbook = WorkbookFactory.create(fileInputStream);
+        try (FileInputStream fileInputStream = new FileInputStream(TestConstants.DATA_FILE_PATH + workbookName + FILE_EXTENSION)) {
+            //Workbook workbook = WorkbookFactory.create(fileInputStream); Auto detects xls and xlsx
+            Workbook workbook = new XSSFWorkbook(fileInputStream);
             sheet = workbook.getSheet(sheetName);
             row = sheet.getRow(rowNumber);
             if (row == null) {
