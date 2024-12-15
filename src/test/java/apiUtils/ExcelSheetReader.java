@@ -42,7 +42,7 @@ public class ExcelSheetReader {
                 continue;
             }
             String value = cell.toString();
-            if (value.equals(columnName)) {
+            if (value.equalsIgnoreCase(columnName)) {
                 return cell.getColumnIndex();
             }
         }
