@@ -8,7 +8,7 @@ Feature: Read Data from Excel
     Examples:
       | SYMBOL | ORDERTYPE |
       | SYMBOL | ORDERTYPE |
-      #| SYMBOL | ORDERTYPE |
+      | SYMBOL | ORDERTYPE |
 
   Scenario Outline: TS_02_Place an order
     Given A Workbook named "secTypesDemo" and sheetname as"equity" is read and to write Data

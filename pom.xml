@@ -124,6 +124,12 @@
                     <suiteXmlFiles>
                         <suiteXmlFile>testng.xml</suiteXmlFile>
                     </suiteXmlFiles>
+                    <properties>
+                        <property>
+                            <name>dataproviderthreadcount</name>
+                            <value>2</value>
+                        </property>
+                    </properties>
                     <systemPropertyVariables>
                         <browser>chrome</browser>
                         <selenium.grid.enabled>false</selenium.grid.enabled>
