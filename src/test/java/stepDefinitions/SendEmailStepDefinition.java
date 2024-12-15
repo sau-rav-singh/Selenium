@@ -3,6 +3,7 @@ package stepDefinitions;
 import com.mailgun.model.message.MessageResponse;
 import customClasses.FundReturnData;
 import customClasses.MutualFund;
+import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import org.testng.Assert;
 import testUtilities.EmailBodyUtil;
@@ -56,4 +57,6 @@ public class SendEmailStepDefinition {
     private double parsePercentage(String percentage) {
         return Double.parseDouble(percentage.replace("%", ""));
     }
+
+
 }

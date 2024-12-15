@@ -45,4 +45,5 @@ public class WriteToExcelStepDefinition {
         excelSheetWriter.writeCell("EXCEL", symbol);
         excelSheetWriter.closeFile();
     }
+
 }
