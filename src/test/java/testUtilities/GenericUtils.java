@@ -10,6 +10,7 @@ import java.util.Properties;
 
 
 public class GenericUtils {
+
     public WebDriver driver;
 
     public GenericUtils(WebDriver driver) {
@@ -17,7 +18,6 @@ public class GenericUtils {
     }
 
     public static Properties getDataFromPropertyFile(String fileName) {
-
         Properties prop;
         prop = new Properties();
         try {
@@ -28,7 +28,6 @@ public class GenericUtils {
             System.out.println(e.getMessage());
         }
         return prop;
-
     }
 
     public static boolean comparePercentageValues(String value1, String value2) {

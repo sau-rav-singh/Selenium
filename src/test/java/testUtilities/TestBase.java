@@ -29,6 +29,7 @@ public class TestBase {
         Properties prop = GenericUtils.getDataFromPropertyFile("global");
         String headlessMode = System.getProperty("headless", prop.getProperty("headless", "false"));
         String browser = System.getProperty("browser", prop.getProperty("browser", "chrome"));
+
         boolean gridEnabled = Boolean.parseBoolean(System.getProperty("selenium.grid.enabled", prop.getProperty("selenium.grid.enabled", "false")));
 
         if (gridEnabled) {

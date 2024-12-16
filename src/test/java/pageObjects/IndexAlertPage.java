@@ -22,13 +22,11 @@ public class IndexAlertPage {
     private final By FIFTYTWOWEEKHIGHVALUE = By.xpath("//div[@id='sp_yearlyhigh']");
     private String indexValue;
     private String fiftyTwoWkHighValue;
-
     private String indexName;
 
     public IndexAlertPage(WebDriver driver) {
         this.driver = driver;
     }
-
 
     public void navigateToIndexPage(String index) {
         indexName = index;
@@ -45,9 +43,11 @@ public class IndexAlertPage {
     public String currentIndexValue(){
         return driver.findElement(INDEXVALUE).getAttribute("data-numberanimate-value");
     }
+
     public void closeMCPopUp(){
         clickIfPresent(NOTIFICATIONPOPUP);
     }
+
     public void capture52WkHighValue() {
         fiftyTwoWkHighValue = driver.findElement(FIFTYTWOWEEKHIGHVALUE).getText();
         System.out.println("fiftyTwoWkHighValue value is " + fiftyTwoWkHighValue);
@@ -63,7 +63,6 @@ public class IndexAlertPage {
         } else {
             System.out.println("No alert needed.");
         }
-
     }
 
     private static double parseCurrencyString(String currencyStr) {
@@ -103,5 +102,4 @@ public class IndexAlertPage {
             driver.findElement(locator).click();
         }
     }
-
 }
