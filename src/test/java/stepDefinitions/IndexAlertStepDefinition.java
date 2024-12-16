@@ -10,7 +10,7 @@ public class IndexAlertStepDefinition {
     TestContextSetup testContextSetup;
     IndexAlertPage indexAlertPage;
 
-    public IndexAlertStepDefinition(TestContextSetup testContextSetup) {
+    public IndexAlertStepDefinition(TestContextSetup testContextSetup){
         this.testContextSetup = testContextSetup;
         this.indexAlertPage = testContextSetup.pageObjectManager.getIndexAlertPage();
     }
