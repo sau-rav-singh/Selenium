@@ -28,7 +28,6 @@ public class IndexAlertStepDefinition {
 
     @Then("Send Email alert if Index Value is less then {string} Threshold")
     public void sendEmailAlertIfIndexValueIsLessThenThreshold(String threshold) {
-
         indexAlertPage.sendEmailOnThresholdBreach(threshold);
     }
 }
