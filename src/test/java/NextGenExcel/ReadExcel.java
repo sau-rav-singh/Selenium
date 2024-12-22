@@ -1,12 +1,10 @@
-package BNYExcel;
+package NextGenExcel;
 
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.ss.usermodel.FormulaEvaluator;
 import org.apache.poi.util.IOUtils;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-
-import java.io.Closeable;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -15,8 +13,8 @@ import java.util.List;
 
 public class ReadExcel {
 
-    private static ThreadLocal<InputStream> fis=new ThreadLocal<>();
-    private static ThreadLocal<XSSFSheet> xssfSheet=new ThreadLocal<>();
+    private static final ThreadLocal<InputStream> fis=new ThreadLocal<>();
+    private static final ThreadLocal<XSSFSheet> xssfSheet=new ThreadLocal<>();
 
     private static void setup(String fileName, String sheetName) throws IOException {
         InputStream inputStreamXls = ReadExcel.class.getResourceAsStream("/data/" + fileName + ".xls");
@@ -30,27 +28,25 @@ public class ReadExcel {
             fis.set(inputStreamXlsx);
         }
 
-        XSSFWorkbook xssfWorkbook = new XSSFWorkbook((InputStream)fis.get());
+        XSSFWorkbook xssfWorkbook = new XSSFWorkbook(fis.get());
         xssfSheet.set(xssfWorkbook.getSheet(sheetName));
         xssfWorkbook.close();
     }
 
     public static List<HashMap<String, String>> readData(String excelName, String sheetName) {
-        System.out.println("Before Read data: " + Thread.currentThread().getId());
         List<HashMap<String, String>> excelData = new ArrayList<>();
 
         try {
             setup(excelName, sheetName);
-            int numRows = ((XSSFSheet)xssfSheet.get()).getLastRowNum();
+            int numRows = xssfSheet.get().getLastRowNum();
 
             for(int i = 1; i <= numRows; ++i) {
-                HashMap<String, String> inputValues = getHashMapDataFromRow((Sheet)xssfSheet.get(), i);
+                HashMap<String, String> inputValues = getHashMapDataFromRow(xssfSheet.get(), i);
                 excelData.add(inputValues);
             }
-        } catch (IOException var9) {
-            IOException e = var9;
+        } catch (IOException ignored) {
         } finally {
-            IOUtils.closeQuietly((Closeable)fis.get());
+            IOUtils.closeQuietly(fis.get());
         }
 
         return excelData;
@@ -82,6 +78,7 @@ public class ReadExcel {
 
         return result;
     }
+
     private static String getValueAsString(Cell cell, FormulaEvaluator formulaEvaluator) {
         return switch (cell.getCellType()) {
             case STRING -> cell.getStringCellValue();
@@ -91,5 +88,4 @@ public class ReadExcel {
             default -> "";
         };
     }
-
 }

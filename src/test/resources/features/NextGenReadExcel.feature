@@ -1,4 +1,4 @@
-@BNY
+@NextGenReadData
 Feature: Read Data from Excel
 
   Scenario Outline: TS_01_Place an order

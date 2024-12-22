@@ -1,6 +1,6 @@
 package stepDefinitions;
 
-import BNYExcel.ReadExcel;
+import NextGenExcel.ReadExcel;
 import io.cucumber.java.Before;
 import io.cucumber.java.Scenario;
 import io.cucumber.java.en.Given;

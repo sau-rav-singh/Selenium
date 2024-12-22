@@ -27,20 +27,20 @@ public class TestBase {
 
     private void initializeWebDriver() {
         Properties prop = GenericUtils.getDataFromPropertyFile("global");
-        String headlessMode = System.getProperty("headless", prop.getProperty("headless", "false"));
+        String isHeadless = System.getProperty("headless", prop.getProperty("headless", "false"));
+        //browser and gridEnabled are coming from Surefire in Pom
         String browser = System.getProperty("browser", prop.getProperty("browser", "chrome"));
-
         boolean gridEnabled = Boolean.parseBoolean(System.getProperty("selenium.grid.enabled", prop.getProperty("selenium.grid.enabled", "false")));
 
         if (gridEnabled) {
-            initializeRemoteWebDriver(browser, headlessMode);
+            initializeRemoteWebDriver(browser, isHeadless);
         } else {
             switch (browser.toLowerCase()) {
                 case "chrome":
-                    initializeChromeDriver(headlessMode);
+                    initializeChromeDriver(isHeadless);
                     break;
                 case "edge":
-                    initializeEdgeDriver(headlessMode);
+                    initializeEdgeDriver(isHeadless);
                     break;
                 default:
                     throw new IllegalArgumentException("Unsupported browser: " + browser);

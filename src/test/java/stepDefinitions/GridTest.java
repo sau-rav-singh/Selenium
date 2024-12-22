@@ -6,7 +6,7 @@ import org.openqa.selenium.remote.RemoteWebDriver;
 import java.net.URI;
 import java.net.URL;
 
-public class GoogleTitleTest {
+public class GridTest {
     public static void main(String[] args) {
         WebDriver driver = null;
         try {
