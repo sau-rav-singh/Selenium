@@ -12,7 +12,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-public class ExcelRowMapper {
+public class ExcelPractice {
 
     public static Map<String, String> getRowData(String filePath, int rowNumber) throws IOException {
         Map<String, String> rowData = new HashMap<>();
