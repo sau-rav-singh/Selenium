@@ -16,7 +16,7 @@ import java.util.Properties;
 public class TestBase {
 
     private static final ThreadLocal<WebDriver> webDriverThreadLocal = new ThreadLocal<>();
-    private static final String GRID_URL = "http://192.168.1.22:4444/wd/hub";
+    private static final String GRID_URL = "http://localhost:4444/wd/hub";
 
     public WebDriver getDriver() {
         if (webDriverThreadLocal.get() == null) {
