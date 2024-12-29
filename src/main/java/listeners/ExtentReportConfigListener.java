@@ -41,5 +41,4 @@ public class ExtentReportConfigListener implements ITestListener {
 				+ stackTrace + "\n" + "</details>\n";
 		ExtentReportManager.logExceptionDetails(formmatedTrace);
 	}
-
 }
