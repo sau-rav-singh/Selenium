@@ -1,6 +1,7 @@
 package stepDefinitions;
 
 import TestUtils.TestContextSetup;
+import com.aventstack.extentreports.cucumber.adapter.ExtentCucumberAdapter;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.When;
 import org.testng.Assert;
@@ -22,6 +23,7 @@ public class LandingPageStepDefinitions {
 
     @When("^User searches with Shortname (.*) and extracts actual name of product$")
     public void userSearchedWithShortnameNameAndExtractedActualNameOfProduct(String productName) {
+        ExtentCucumberAdapter.addTestStepLog("User is On HomePage");
         landingPage.enterSearchTerm(productName);
         testContextSetup.searchResults = landingPage.extractProductNames();
         testContextSetup.searchResults.forEach(System.out::println);

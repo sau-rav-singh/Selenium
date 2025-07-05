@@ -9,5 +9,6 @@ Feature: Place the order
     And verify user has ability to enter promo code and place the order
 
     Examples:
-      | Name |
-      | Tom  |
+      | Name   |
+      | Tom    |
+      | Chawal |
