@@ -10,5 +10,5 @@ Feature: Search for Products
     Examples:
       | Name   |
       | Tom    |
-#      | Carrot |
-#      | Potato |
+      | Carrot |
+      | Potato |
