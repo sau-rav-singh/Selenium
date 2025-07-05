@@ -5,5 +5,5 @@
     <classes>
       <class name="cucumberOptions.TestNGTestRunner"/>
  </classes>
-</test> <!-- Test -->
-</suite> <!-- Suite -->
+</test>
+</suite>
