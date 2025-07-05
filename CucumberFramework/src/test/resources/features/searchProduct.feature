@@ -1,7 +1,7 @@
-Feature: Search and Place the order for Products
+Feature: Search for Products
 
-  @OffersPage
-  Scenario Outline: Search Experience for product search in both home and Offers page
+  @SearchProduct
+  Scenario Outline: Search for product on HomePage and OffersPage
     Given User is on GreenCart Landing page
     When User searches with Shortname <Name> and extracts actual name of product
     Then User searches for <Name> shortname in offers page

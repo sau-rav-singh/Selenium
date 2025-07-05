@@ -1,7 +1,7 @@
-Feature: Place the order for Products
+Feature: Place the order
 
   @PlaceOrder
-  Scenario Outline: Search Experience for product search in both home and Offers page
+  Scenario Outline: Search the product and place the order
     Given User is on GreenCart Landing page
     When User searches with Shortname <Name> and extracts actual name of product
     And Added "3" items of the selected product to cart

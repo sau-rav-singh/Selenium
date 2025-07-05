@@ -36,6 +36,5 @@ public class LandingPageStepDefinitions {
         }
         landingPage.incrementQuantity(Integer.parseInt(quantity));
         landingPage.addToCart();
-
     }
 }

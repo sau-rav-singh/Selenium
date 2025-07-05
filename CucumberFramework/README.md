@@ -17,7 +17,7 @@ CucumberFramework/
 ├── src/
 │   └── test/
 │       ├── java/
-│       │   ├── cucumberOptions/      # Cucumber runner and hooks
+│       │   ├── testRunner/      # Cucumber runner and hooks
 │       │   ├── pageObjects/          # Page Object classes
 │       │   ├── stepDefinitions/      # Step definition files
 │       │   └── TestUtils/            # Utility classes
@@ -31,12 +31,11 @@ CucumberFramework/
 ### Prerequisites
 - Java 8 or higher
 - Maven
-- ChromeDriver/GeckoDriver (as required)
 
 ### Setup
 1. Clone the repository:
    ```
-   git clone <repo-url>
+   git clone https://github.com/sau-rav-singh/Selenium.git
    ```
 2. Navigate to the project directory:
    ```
@@ -53,7 +52,7 @@ CucumberFramework/
   mvn test -DsuiteXmlFile=testng.xml
   ```
 - To run Cucumber features:
-  - Use the Cucumber runner class in `cucumberOptions` package.
+  - Use the Cucumber runner class in `testRunner` package.
 
 ### Configuration
 - Update `src/test/resources/global.properties` for environment-specific settings (e.g., browser, base URL).
@@ -61,9 +60,4 @@ CucumberFramework/
 ## Reporting
 - TestNG and Cucumber reports are generated in the `target/` directory after test execution.
 
-## Contributing
-Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
-
-## License
-This project is licensed under the MIT License.
 
