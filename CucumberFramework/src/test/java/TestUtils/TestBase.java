@@ -4,6 +4,8 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.edge.EdgeOptions;
+import org.openqa.selenium.support.events.EventFiringDecorator;
+import org.openqa.selenium.support.events.WebDriverListener;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -37,7 +39,10 @@ public class TestBase {
                 options.addArguments("--blink-settings=imagesEnabled=false");
                 webDriverThreadLocal.set(new EdgeDriver(options));
             }
-
+            WebDriver driver=webDriverThreadLocal.get();
+            WebDriverListener myListner = new MyListener(driver);
+            driver=new EventFiringDecorator<>(myListner).decorate(driver);
+            webDriverThreadLocal.set(driver);
             getDriver().manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
             getDriver().manage().window().maximize();
             getDriver().get(url);

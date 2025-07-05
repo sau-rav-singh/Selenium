@@ -8,9 +8,11 @@ public class GenericUtils {
 
     WebDriver driver;
     String currentWindowHandle;
-    public GenericUtils(WebDriver driver){
-        this.driver=driver;
+
+    public GenericUtils(WebDriver driver) {
+        this.driver = driver;
     }
+
     public void switchToOffersPage() {
         currentWindowHandle = driver.getWindowHandle();
         Set<String> allWindowHandles = driver.getWindowHandles();
@@ -21,7 +23,8 @@ public class GenericUtils {
             }
         }
     }
-    public void switchToMainPage(){
+
+    public void switchToMainPage() {
         driver.close();
         driver.switchTo().window(currentWindowHandle);
     }
