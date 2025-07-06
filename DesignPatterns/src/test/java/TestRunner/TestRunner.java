@@ -3,7 +3,10 @@ package TestRunner;
 import Utils.WebDriverManager;
 import io.cucumber.testng.AbstractTestNGCucumberTests;
 import io.cucumber.testng.CucumberOptions;
-import org.testng.annotations.*;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.DataProvider;
+import org.testng.annotations.Parameters;
 
 @CucumberOptions(
         features = "src/test/resources/Features",
@@ -19,14 +22,14 @@ public class TestRunner extends AbstractTestNGCucumberTests {
         return super.scenarios();
     }
 
-    @Parameters({ "browser" })
+    @Parameters({"browser"})
     @BeforeMethod
     public static void setUpScenario(String browser) {
         WebDriverManager.initDriver(browser);
     }
 
     @AfterMethod
-    public void tearDown(){
+    public void tearDown() {
         WebDriverManager.quitBrowser();
     }
 }
