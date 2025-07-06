@@ -1,4 +1,4 @@
-package TestUtils;
+package testUtils;
 
 import com.aventstack.extentreports.MediaEntityBuilder;
 import com.aventstack.extentreports.cucumber.adapter.ExtentCucumberAdapter;

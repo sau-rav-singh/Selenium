@@ -4,21 +4,32 @@ import org.openqa.selenium.WebDriver;
 
 public class PageObjectManager {
     public WebDriver driver;
+    private LandingPage landingPage;
+    private OffersPage offersPage;
+    private CheckoutPage checkoutPage;
 
     public PageObjectManager(WebDriver driver) {
         this.driver = driver;
     }
 
     public LandingPage getLandingPage() {
-        return new LandingPage(driver);
+        if (landingPage == null) {
+            landingPage = new LandingPage(driver);
+        }
+        return landingPage;
     }
 
     public OffersPage getOffersPage() {
-        return new OffersPage(driver);
+        if (offersPage == null) {
+            offersPage = new OffersPage(driver);
+        }
+        return offersPage;
     }
 
     public CheckoutPage getCheckoutPage() {
-        return new CheckoutPage(driver);
+        if (checkoutPage == null) {
+            checkoutPage = new CheckoutPage(driver);
+        }
+        return checkoutPage;
     }
-
 }

@@ -1,7 +1,7 @@
 package stepDefinitions;
 
-import TestUtils.TestBase;
-import TestUtils.TestContextSetup;
+import testUtils.TestBase;
+import testUtils.TestContextSetup;
 import io.cucumber.java.After;
 
 public class Hooks {

@@ -1,4 +1,4 @@
-package TestUtils;
+package testUtils;
 
 import org.openqa.selenium.WebDriver;
 

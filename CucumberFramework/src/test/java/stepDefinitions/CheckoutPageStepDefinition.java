@@ -1,6 +1,6 @@
 package stepDefinitions;
 
-import TestUtils.TestContextSetup;
+import testUtils.TestContextSetup;
 import io.cucumber.java.en.Then;
 import org.testng.Assert;
 import pageObjects.CheckoutPage;

@@ -1,6 +1,6 @@
 package stepDefinitions;
 
-import TestUtils.TestContextSetup;
+import testUtils.TestContextSetup;
 import com.aventstack.extentreports.cucumber.adapter.ExtentCucumberAdapter;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.When;
