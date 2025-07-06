@@ -59,12 +59,12 @@ CucumberFramework/
 ### Configuration
 - Update `src/test/resources/global.properties` for environment-specific settings (e.g., browser, base URL).
 
-## Reporting
+### Reporting
 - Extent reports are generated in the `ExtentReports/SparkReports_Timestamp` directory after test execution.
 
 ## Project Notes
 
-## 1. TestContextSetup
+### 1. TestContextSetup
 The Core of State Management -The TestContextSetup class is the backbone of this framework's test execution flow, acting as a Dependency Injection container. Its primary role is to create and share state between different step definition files within a single Cucumber scenario.
 #### How it Initiates the Browser
 When a new test scenario begins, Cucumber creates an instance of TestContextSetup. This triggers its constructor, which orchestrates the entire setup process:
@@ -75,13 +75,13 @@ When a new test scenario begins, Cucumber creates an instance of TestContextSetu
    - Applies implicit waits and maximizes the browser window.
    - Returns the fully configured WebDriver instance.
 3. **Sharing the Driver**: The WebDriver instance returned by initializeDriver() is then passed to the constructors of PageObjectManager and GenericUtils, ensuring all parts of the framework use the same browser instance for the duration of the test.
-## 2. PageObjectManager
+### 2. PageObjectManager
 The PageObjectManager class acts as a factory for creating and managing all Page Object instances within the test framework. It ensures that only a single instance of each page object is created per test scenario, promoting code reusability and efficient memory management.
 ### Key Responsibilities
 1. **Centralized Instantiation**: Provides a single, central point of access for all page objects. Instead of creating new PageObject() in every step definition file, you can request it from the manager.
 2. **Lazy Initialization**: Page objects are only created when they are first requested. This "on-demand" creation prevents unnecessary object instantiation, which can improve the performance of test startup.
 3. **State Management**: By returning the same instance of a page object throughout a test scenario, it allows for state to be easily shared between different steps that interact with the same page.
-## 3. Test Runner (TestNGTestRunner.java)
+### 3. Test Runner (TestNGTestRunner.java)
 The TestNGTestRunner.java class is the primary entry point for executing Cucumber tests using the TestNG framework. It acts as a bridge, allowing TestNG to discover and run Cucumber features as if they were standard TestNG tests.This class uses the @CucumberOptions annotation to configure the test run and extends AbstractTestNGCucumberTests to integrate with TestNG's execution lifecycle.
 ### Key Responsibilities
 1. **Test Configuration**: Defines where to find feature files (features), step definitions (glue), and which scenarios to run (tags).
@@ -118,7 +118,7 @@ The configuration in pom.xml looks like this:
 
 By adjusting the <value> in the pom.xml, you can easily scale the number of parallel test executions up or down to suit your needs.
 
-## 4. Failed Test Re-run (`FailedTestRunner.java`)
+### 4. Failed Test Re-run (`FailedTestRunner.java`)
 
 This framework includes a dedicated test runner, `FailedTestRunner.java`, designed specifically to re-execute only the scenarios that failed during a previous test run.
 This is a crucial feature for handling flaky tests and quickly verifying bug fixes without needing to run the entire test suite again.
@@ -149,7 +149,7 @@ The `FailedTestRunner` is configured with:
 @CucumberOptions(features = "@target/failed_scenarios.txt")
 ```
 
-## 5. Event Handling with `DriverListener`
+### 5. Event Handling with `DriverListener`
 
 The `DriverListener.java` class is a custom implementation of Selenium's `WebDriverListener` interface.
 It's designed to **"listen" for specific events** during a test run—such as clicks, navigation, or errors—and execute custom code when those events occur.
@@ -203,14 +203,14 @@ this.driver = decoratedDriver;
 
 By using the decoratedDriver instance throughout the framework, all subsequent actions will be intercepted by the DriverListener, enabling the automated logging and screenshot functionality.
 
-## 6. WebDriver Management (`TestBase.java`)
+### 6. WebDriver Management (`TestBase.java`)
 
 The `TestBase` class is the foundational component of this framework, responsible for the entire lifecycle of the WebDriver instance.
 It is engineered to handle driver creation, configuration, and cleanup in a robust and thread-safe manner, which is essential for running tests in parallel.
 
 ---
 
-### ✅ Key Responsibilities
+### Key Responsibilities
 
 - **Thread-Safe WebDriver Instantiation**
   Utilizes `ThreadLocal` to ensure that each test execution thread gets its own isolated WebDriver instance.
@@ -259,8 +259,3 @@ The TestBase methods are designed to be called from a Cucumber Hooks class (@Bef
     }
 }
 ```
-
-
-
-
-
