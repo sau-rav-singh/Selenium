@@ -3,7 +3,6 @@ package testUtilities;
 import com.mailgun.api.v3.MailgunMessagesApi;
 import com.mailgun.client.MailgunClient;
 import com.mailgun.model.message.Message;
-import com.mailgun.model.message.MessageResponse;
 import jakarta.mail.*;
 import jakarta.mail.internet.InternetAddress;
 import jakarta.mail.internet.MimeMessage;
@@ -12,11 +11,14 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.time.Instant;
+import java.time.ZoneOffset;
+import java.time.format.DateTimeFormatter;
 import java.util.Properties;
 
 public class SendEmailUtil {
 
-    public static MessageResponse sendMutualFundsReportMailGun(String htmlContent, boolean fundsHealthCheck) {
+    public static String sendMutualFundsReportMailGun(String htmlContent, boolean fundsHealthCheck) {
         Properties prop = GenericUtils.getDataFromPropertyFile("global");
         String apiKey = prop.getProperty("mailgun_api_key");
         String domain = prop.getProperty("mailgun_domain");
@@ -25,7 +27,7 @@ public class SendEmailUtil {
 
         Message message = Message.builder().from("Gitlab Runner <USER@YOURDOMAIN.COM>").to("singh.saurav@icloud.com").subject(getEmailSubject(fundsHealthCheck)).html(htmlContent).build();
 
-        return mailgunMessagesApi.sendMessage(domain, message);
+        return mailgunMessagesApi.sendMessage(domain, message).toString();
     }
 
     public static String sendMutualFundsReportSMTP(String htmlContent, boolean fundsHealthCheck) {
@@ -66,15 +68,21 @@ public class SendEmailUtil {
     }
 
     public static void saveHtml(String htmlContent) {
-        String filePath = "output.html";
+        Instant timestamp = Instant.now();
+        String formattedTimestamp = DateTimeFormatter.ofPattern("yyyy-MM-dd_HH-mm-ss-SSS")
+                .withZone(ZoneOffset.UTC)
+                .format(timestamp);
+        String filePath = "output_" + formattedTimestamp + ".html";
         File file = new File(filePath);
+
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
             writer.write(htmlContent);
             System.out.println("HTML content saved to file: " + filePath);
         } catch (IOException e) {
-            System.out.println(e.getMessage());
+            System.err.println("Error saving HTML content: " + e.getMessage());
         }
     }
+
 
     public static String smtpPassword() {
         String password = System.getenv("SMTP_EMAIL_PASSWORD");

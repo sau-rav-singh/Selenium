@@ -7,6 +7,8 @@ import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.edge.EdgeOptions;
 import org.openqa.selenium.remote.RemoteWebDriver;
+
+import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -75,8 +77,8 @@ public class TestBase {
     private void initializeChromeDriver(String headlessMode) {
         ChromeOptions chromeOptions = new ChromeOptions();
         chromeOptions.addArguments("--disable-notifications");
-        chromeOptions.addArguments("user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36");
-
+        File extensionFile = new File("src/test/resources/adguard.crx");
+        chromeOptions.addExtensions(extensionFile);
         if ("true".equalsIgnoreCase(headlessMode)) {
             chromeOptions.addArguments("--headless", "--no-sandbox", "--disable-dev-shm-usage", "--disable-gpu", "--window-size=1920,1080");
         }

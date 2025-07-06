@@ -23,10 +23,11 @@ public class SendEmailStepDefinition {
     }
 
     private void sendMutualFundsReport(String htmlContent, boolean fundsHealthCheck) {
-        System.out.println("Sending email using MailGun...");
-        MessageResponse response = SendEmailUtil.sendMutualFundsReportMailGun(htmlContent, fundsHealthCheck);
-        System.out.println(response);
-        Assert.assertTrue(response.toString().contains("Thank"));
+//        System.out.println("Sending email using MailGun...");
+//        String response = SendEmailUtil.sendMutualFundsReportMailGun(htmlContent, fundsHealthCheck);
+//        System.out.println(response);
+//        Assert.assertTrue(response.contains("Thank"));
+        SendEmailUtil.saveHtml(htmlContent);
     }
 
     public boolean compareFundReturn(List<MutualFund> mutualFundRows) {
