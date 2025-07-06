@@ -17,12 +17,6 @@ public class Hooks {
 
     @After
     public void tearDown(Scenario scenario) {
-        WebDriver driver=testContextSetup.testBase.getDriver();
-        //validate if scenario has failed
-        if(scenario.isFailed()) {
-            final byte[] screenshot = ((TakesScreenshot) driver).getScreenshotAs(OutputType.BYTES);
-            scenario.attach(screenshot, "image/png", scenario.getName());
-        }
         if (testContextSetup.testBase.getDriver() != null) {
             testContextSetup.testBase.getDriver().quit();
             TestBase.clearDriver();
