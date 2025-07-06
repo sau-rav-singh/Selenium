@@ -39,7 +39,7 @@ public class TestBase {
                 webDriverThreadLocal.set(new EdgeDriver(options));
             }
             WebDriver driver=webDriverThreadLocal.get();
-            WebDriverListener myListner = new MyListener(driver);
+            WebDriverListener myListner = new DriverListener(driver);
             driver=new EventFiringDecorator<>(myListner).decorate(driver);
             webDriverThreadLocal.set(driver);
             getDriver().manage().timeouts().implicitlyWait(Duration.ofSeconds(5));

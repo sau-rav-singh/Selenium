@@ -16,10 +16,10 @@ import java.lang.reflect.Method;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class MyListener implements WebDriverListener {
+public class DriverListener implements WebDriverListener {
     private final WebDriver driver;
 
-    public MyListener(WebDriver driver) {
+    public DriverListener(WebDriver driver) {
         this.driver = driver;
     }
 
