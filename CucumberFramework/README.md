@@ -75,19 +75,21 @@ When a new test scenario begins, Cucumber creates an instance of TestContextSetu
    - Applies implicit waits and maximizes the browser window.
    - Returns the fully configured WebDriver instance.
 3. **Sharing the Driver**: The WebDriver instance returned by initializeDriver() is then passed to the constructors of PageObjectManager and GenericUtils, ensuring all parts of the framework use the same browser instance for the duration of the test.
+
 ### 2. PageObjectManager
 The PageObjectManager class acts as a factory for creating and managing all Page Object instances within the test framework. It ensures that only a single instance of each page object is created per test scenario, promoting code reusability and efficient memory management.
-### Key Responsibilities
+#### Key Responsibilities
 1. **Centralized Instantiation**: Provides a single, central point of access for all page objects. Instead of creating new PageObject() in every step definition file, you can request it from the manager.
 2. **Lazy Initialization**: Page objects are only created when they are first requested. This "on-demand" creation prevents unnecessary object instantiation, which can improve the performance of test startup.
 3. **State Management**: By returning the same instance of a page object throughout a test scenario, it allows for state to be easily shared between different steps that interact with the same page.
+
 ### 3. Test Runner (TestNGTestRunner.java)
 The TestNGTestRunner.java class is the primary entry point for executing Cucumber tests using the TestNG framework. It acts as a bridge, allowing TestNG to discover and run Cucumber features as if they were standard TestNG tests.This class uses the @CucumberOptions annotation to configure the test run and extends AbstractTestNGCucumberTests to integrate with TestNG's execution lifecycle.
-### Key Responsibilities
+#### Key Responsibilities
 1. **Test Configuration**: Defines where to find feature files (features), step definitions (glue), and which scenarios to run (tags).
 2. **Reporting**: Configures output formats for test reports, such as HTML, JSON, and the ExtentReports adapter.
 3. **Enabling Parallel Execution**: Enables scenarios to be run in parallel by leveraging TestNG's Data Provider mechanism.
-### How Parallel Execution is Controlled
+#### How Parallel Execution is Controlled
 While the TestNGTestRunner.java file enables parallel execution by annotating the scenarios() method with @DataProvider(parallel = true), the number of parallel threads (and thus, the number of concurrent browsers) is controlled externally by the Maven Surefire Plugin in the pom.xml.
 
 This separation of concerns allows you to change the degree of parallelism without modifying the test runner code.
@@ -111,7 +113,7 @@ The configuration in pom.xml looks like this:
     </configuration>
 </plugin>
 ```
-### Explanation:
+#### Explanation:
 1. **@DataProvider(parallel = true)**: This annotation in TestNGTestRunner tells TestNG that the scenarios from Cucumber should be run using a parallel data provider.
 2. **<name>dataproviderthreadcount</name>**: This property is passed by Maven Surefire directly to the TestNG runtime. It specifically sets the size of the thread pool for parallel data providers.
 3. **value>2</value**: This value instructs TestNG to use 2 threads for the data provider. Consequently, a maximum of 2 Cucumber scenarios will run in parallel at any given time, each typically launching its own browser instance.
@@ -119,13 +121,12 @@ The configuration in pom.xml looks like this:
 By adjusting the <value> in the pom.xml, you can easily scale the number of parallel test executions up or down to suit your needs.
 
 ### 4. Failed Test Re-run (`FailedTestRunner.java`)
-
 This framework includes a dedicated test runner, `FailedTestRunner.java`, designed specifically to re-execute only the scenarios that failed during a previous test run.
 This is a crucial feature for handling flaky tests and quickly verifying bug fixes without needing to run the entire test suite again.
 
 ---
 
-## Purpose
+#### Purpose
 
 - **Efficiency**: Saves significant time by isolating and re-running only the failed tests.
 - **CI/CD Integration**: Can be integrated into a CI/CD pipeline as a separate stage that runs only if the main test stage has failures.
@@ -133,15 +134,15 @@ This is a crucial feature for handling flaky tests and quickly verifying bug fix
 
 ---
 
-## How It Works
+#### How It Works
 
 The `FailedTestRunner` works by reading a special text file that contains the exact location of each failed scenario.
 
-### 1. Generating the Failure File
+#### 1. Generating the Failure File
 
 The main `TestNGTestRunner` must be configured with the **rerun plugin**. This plugin automatically creates a file (e.g., `rerun:target/failed_scenarios.txt`) and logs the path to any scenario that fails.
 
-### 2. Reading the Failure File
+#### 2. Reading the Failure File
 
 The `FailedTestRunner` is configured with:
 
@@ -158,7 +159,7 @@ Its primary role in this framework is to provide **automatic screenshot capture*
 
 ---
 
-## Key Responsibilities
+#### Key Responsibilities
 
 - **Automated Screenshots**: Automatically takes a screenshot **before and after** a click action on any `WebElement`.
 - **Error Capture**: Instantly captures a screenshot the moment any WebDriver command fails, providing a clear visual of the application's state at the point of error.
@@ -166,7 +167,7 @@ Its primary role in this framework is to provide **automatic screenshot capture*
 
 ---
 
-## How It Works
+#### How It Works
 
 1. **Implementation**
    The class implements the `WebDriverListener` interface.
@@ -182,12 +183,12 @@ Its primary role in this framework is to provide **automatic screenshot capture*
 
 ---
 
-## Integration
+#### Integration
 
 This listener is **not used automatically**. It must be registered with the `WebDriver` instance when it is created.
 This is typically done in a base class or context setup file using Selenium's `EventFiringDecorator`.
 
-### Example: Registering the Listener
+#### Example: Registering the Listener
 
 ```java
 // In your WebDriver setup class (e.g., TestBase or TestContextSetup)
@@ -210,7 +211,7 @@ It is engineered to handle driver creation, configuration, and cleanup in a robu
 
 ---
 
-### Key Responsibilities
+#### Key Responsibilities
 
 - **Thread-Safe WebDriver Instantiation**
   Utilizes `ThreadLocal` to ensure that each test execution thread gets its own isolated WebDriver instance.
@@ -233,7 +234,7 @@ This transparently enables features like automatic screenshotting on clicks and 
 - **Clean Driver Teardown**:
 Provides a mechanism to properly clean up WebDriver instances and remove them from the ThreadLocal pool after a test is complete, preventing memory leaks.
 
-### Usage in ```Cucumber Hooks```
+#### Usage in ```Cucumber Hooks```
 The TestBase methods are designed to be called from a Cucumber Hooks class (@Before and @After annotations) to manage the browser lifecycle for each scenario.Example (Hooks.java):
 ```public class Hooks {
     TestContextSetup testContextSetup;
