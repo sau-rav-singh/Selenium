@@ -63,5 +63,4 @@ public class DriverListener implements WebDriverListener {
             e.printStackTrace();
         }
     }
-
 }
