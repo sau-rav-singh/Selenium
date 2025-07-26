@@ -1,4 +1,3 @@
-```markdown
 # PortfolioTracker
 
 A Java-based automation project for tracking mutual fund and index benchmarks using Selenium WebDriver, Cucumber (BDD), and TestNG. This project is designed to automate the process of capturing fund returns, category averages, and benchmark values from financial websites, and to send alerts based on configurable thresholds.
@@ -136,4 +135,3 @@ This project is licensed under the MIT License.
 ---
 
 **Author:** [sau-rav-singh](https://github.com/sau-rav-singh)
-```
