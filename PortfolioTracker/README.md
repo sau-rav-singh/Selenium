@@ -111,7 +111,7 @@ This approach, often called "Context Sharing" or "Dependency Injection," ensures
 3. **Centralized Access**: It provides a single, shared point of access for other classes (like step definitions) to get the objects they need.
 
 #### How it Works
-When an instance of TestContextSetup is created (typically once per test scenario by a framework like Cucumber), its constructor performs the following actions:
+When an instance of TestContextSetup is created, its constructor performs the following actions:
 1. **new TestBase()**: It creates an instance of TestBase, which is responsible for the low-level WebDriver setup, browser launch, and configuration.
 2. **new PageObjectManager(...)**: It creates an instance of the PageObjectManager, passing it the WebDriver instance obtained from TestBase. The PageObjectManager is responsible for creating and providing instances of all page objects.
 3. **new GenericUtils(...)**: It creates an instance of GenericUtils, also passing it the WebDriver instance. This class contains generic, reusable methods (like custom waits, screenshot utilities, etc.) that can be used across any page or test step.
