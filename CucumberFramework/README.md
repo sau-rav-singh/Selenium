@@ -68,7 +68,7 @@ CucumberFramework/
 The Core of State Management -The TestContextSetup class is the backbone of this framework's test execution flow, acting as a Dependency Injection container. Its primary role is to create and share state between different step definition files within a single Cucumber scenario.
 #### How it Initiates the Browser
 When a new test scenario begins, Cucumber creates an instance of TestContextSetup. This triggers its constructor, which orchestrates the entire setup process:
-1. **testBase** = new TestBase();: It first instantiates the TestBase class, which contains the low-level logic for browser and driver management.
+1. **testBase = new TestBase();** : It first instantiates the TestBase class, which contains the low-level logic for browser and driver management.
 2. **testBase.initializeDriver()**: It then calls the initializeDriver() method from the TestBase object. This is the key method that:
    - Reads the config.properties file to determine which browser to use.
    - Instantiates the correct WebDriver (e.g., ChromeDriver).

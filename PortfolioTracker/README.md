@@ -38,11 +38,9 @@ A Java-based automation project for tracking mutual fund and index benchmarks us
 PortfolioTracker/
 ├── pom.xml                        # Maven dependencies and build config
 ├── src/
-│   ├── main/
-│   │   └── java/
-│   │       └── (core logic, if any)
 │   └── test/
 │       ├── java/
+│       │   ├── customClasses/     # Custom classes (e.g., MutualFund)
 │       │   ├── pageObjects/       # Page Object classes (e.g., MFBenchMarkPage, IndexAlertPage)
 │       │   ├── stepDefinitions/   # Step definition files (Cucumber glue code)
 │       │   ├── testRunner/        # Cucumber runner and hooks
@@ -58,9 +56,6 @@ PortfolioTracker/
 ### Prerequisites
 
 - Java 8 or higher (Java 21+ recommended)
-- Maven 3.6+
-- Chrome or Firefox browser installed
-
 ### Setup
 
 1. **Clone the repository:**
@@ -102,13 +97,27 @@ PortfolioTracker/
 - **Extent Reports**: After test execution, reports are generated in the `ExtentReports/SparkReports_<timestamp>` directory.
 - **Logs**: Log4j is used for logging test execution details.
 
-## Core Components
+## Project Notes
 
 ### TestContextSetup
 
-- Acts as a Dependency Injection container.
-- Manages WebDriver lifecycle and shares state across step definitions.
-- Instantiates `TestBase`, which reads configuration and initializes the browser.
+This class serves as the core dependency injection container for the entire test framework. Its primary role is to manage and share the state and common objects (like the WebDriver instance, Page Object Manager, and utility classes) across different steps of a single test scenario.
+
+This approach, often called "Context Sharing" or "Dependency Injection," ensures that all components of a test (e.g., different step definition files in Cucumber) operate on the same browser instance and have access to the same set of helper objects.
+
+#### Key Responsibilities:
+1. **State Management**: It holds the single instance of the WebDriver, ensuring every part of the test uses the same browser session.
+2. **Object Initialization**: In its constructor, it initializes all the essential helper and manager classes required for the tests to run.
+3. **Centralized Access**: It provides a single, shared point of access for other classes (like step definitions) to get the objects they need.
+
+#### How it Works
+When an instance of TestContextSetup is created (typically once per test scenario by a framework like Cucumber), its constructor performs the following actions:
+1. **new TestBase()**: It creates an instance of TestBase, which is responsible for the low-level WebDriver setup, browser launch, and configuration.
+2. **new PageObjectManager(...)**: It creates an instance of the PageObjectManager, passing it the WebDriver instance obtained from TestBase. The PageObjectManager is responsible for creating and providing instances of all page objects.
+3. **new GenericUtils(...)**: It creates an instance of GenericUtils, also passing it the WebDriver instance. This class contains generic, reusable methods (like custom waits, screenshot utilities, etc.) that can be used across any page or test step.
+
+
+### TestBase
 
 ### PageObjectManager
 
