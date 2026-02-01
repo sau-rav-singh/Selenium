@@ -13,7 +13,7 @@ RUN apt-get update -qqy \
     && sed -i 's/"$HERE\/chrome"/"$HERE\/chrome" --no-sandbox/g' /opt/google/chrome/google-chrome
 
 # ChromeDriver
-ARG CHROME_DRIVER_VERSION=143.0.7499.192
+ARG CHROME_DRIVER_VERSION=145.0.7632.26
 RUN wget -q -O /tmp/chromedriver.zip https://storage.googleapis.com/chrome-for-testing-public/${CHROME_DRIVER_VERSION}/linux64/chromedriver-linux64.zip
 RUN unzip /tmp/chromedriver.zip -d /opt 
 RUN rm /tmp/chromedriver.zip
