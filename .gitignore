@@ -15,3 +15,5 @@
 /.idea/Selenium.iml
 /.idea/vcs.xml
 /DesignPatterns/target/
+.idea
+/SeleniumPractice/target
