@@ -2,8 +2,10 @@ package actions;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import com.aventstack.extentreports.ExtentTest;
+import java.util.List;
 
 public class CommonActions implements Actions {
 
@@ -18,6 +20,11 @@ public class CommonActions implements Actions {
     @Override
     public void click(By locator) {
         actions.click(locator);
+    }
+
+    @Override
+    public void click(WebElement element) {
+        actions.click(element);
     }
 
     @Override
@@ -53,5 +60,10 @@ public class CommonActions implements Actions {
     @Override
     public void assertEquals(Object actual, Object expected, String message) {
         actions.assertEquals(actual, expected, message);
+    }
+
+    @Override
+    public List<WebElement> findElements(By locator) {
+        return actions.findElements(locator);
     }
 }

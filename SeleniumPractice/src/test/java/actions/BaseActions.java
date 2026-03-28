@@ -8,6 +8,8 @@ import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 
+import java.util.List;
+
 public class BaseActions implements Actions {
 
     protected WebDriver driver;
@@ -21,6 +23,11 @@ public class BaseActions implements Actions {
     @Override
     public void click(By locator) {
         wait.until(ExpectedConditions.elementToBeClickable(locator)).click();
+    }
+
+    @Override
+    public void click(WebElement element) {
+        wait.until(ExpectedConditions.elementToBeClickable(element)).click();
     }
 
     @Override
@@ -66,5 +73,10 @@ public class BaseActions implements Actions {
     @Override
     public void assertEquals(Object actual, Object expected, String message) {
         Assert.assertEquals(actual, expected, message);
+    }
+
+    @Override
+    public List<WebElement> findElements(By locator) {
+        return wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(locator));
     }
 }

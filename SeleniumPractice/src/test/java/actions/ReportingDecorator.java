@@ -4,9 +4,11 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import com.aventstack.extentreports.ExtentTest;
 import com.aventstack.extentreports.MediaEntityBuilder;
 import com.aventstack.extentreports.Status;
+import java.util.List;
 
 public class ReportingDecorator implements Actions {
     private final Actions decorated;
@@ -30,6 +32,18 @@ public class ReportingDecorator implements Actions {
             test.log(Status.PASS, "Clicked on element: " + locator);
         } catch (Exception e) {
             test.log(Status.FAIL, "Failed to click on element: " + locator + ". Error: " + e.getMessage(),
+                    MediaEntityBuilder.createScreenCaptureFromBase64String(captureScreenshot()).build());
+            throw e;
+        }
+    }
+
+    @Override
+    public void click(WebElement element) {
+        try {
+            decorated.click(element);
+            test.log(Status.PASS, "Clicked on element: " + element.toString());
+        } catch (Exception e) {
+            test.log(Status.FAIL, "Failed to click on element: " + element.toString() + ". Error: " + e.getMessage(),
                     MediaEntityBuilder.createScreenCaptureFromBase64String(captureScreenshot()).build());
             throw e;
         }
@@ -124,5 +138,10 @@ public class ReportingDecorator implements Actions {
                     MediaEntityBuilder.createScreenCaptureFromBase64String(captureScreenshot()).build());
             throw e;
         }
+    }
+
+    @Override
+    public List<WebElement> findElements(By locator) {
+        return decorated.findElements(locator);
     }
 }

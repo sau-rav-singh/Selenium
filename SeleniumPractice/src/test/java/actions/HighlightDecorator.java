@@ -5,6 +5,8 @@ import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
+import java.util.List;
+
 public class HighlightDecorator implements Actions {
     private final Actions decorated;
     private final WebDriver driver;
@@ -17,6 +19,14 @@ public class HighlightDecorator implements Actions {
     private void highlight(By locator) {
         try {
             WebElement element = driver.findElement(locator);
+            highlight(element);
+        } catch (Exception e) {
+            // Ignore highlighting errors
+        }
+    }
+
+    private void highlight(WebElement element) {
+        try {
             JavascriptExecutor js = (JavascriptExecutor) driver;
             js.executeScript("arguments[0].setAttribute('style', 'background: yellow; border: 2px solid red;');", element);
             Thread.sleep(100); 
@@ -30,6 +40,12 @@ public class HighlightDecorator implements Actions {
     public void click(By locator) {
         highlight(locator);
         decorated.click(locator);
+    }
+
+    @Override
+    public void click(WebElement element) {
+        highlight(element);
+        decorated.click(element);
     }
 
     @Override
@@ -53,7 +69,7 @@ public class HighlightDecorator implements Actions {
     @Override
     public void selectByIndex(By locator, int index) {
         highlight(locator);
-        decorated.selectByIndex(locator, index);
+        decorated.selectByIndex(locator,index);
     }
 
     @Override
@@ -71,5 +87,10 @@ public class HighlightDecorator implements Actions {
     @Override
     public void assertEquals(Object actual, Object expected, String message) {
         decorated.assertEquals(actual, expected, message);
+    }
+
+    @Override
+    public List<WebElement> findElements(By locator) {
+        return decorated.findElements(locator);
     }
 }
