@@ -2,11 +2,14 @@ package utils;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.edge.EdgeDriver;
+import org.openqa.selenium.edge.EdgeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.firefox.FirefoxOptions;
 
 /**
- * Uses a Simple Factory pattern to return the base WebDriver.
+ * Updated BrowserFactory that respects 'headless' setting from config.properties.
  */
 public class BrowserFactory {
 
@@ -18,10 +21,24 @@ public class BrowserFactory {
             throw new IllegalArgumentException("Unsupported browser: " + browserName);
         }
 
+        boolean isHeadless = ConfigReader.isHeadless();
+
         return switch (browser) {
-            case CHROME -> new ChromeDriver();
-            case FIREFOX -> new FirefoxDriver();
-            case EDGE -> new EdgeDriver();
+            case CHROME -> {
+                ChromeOptions options = new ChromeOptions();
+                if (isHeadless) options.addArguments("--headless=new");
+                yield new ChromeDriver(options);
+            }
+            case FIREFOX -> {
+                FirefoxOptions options = new FirefoxOptions();
+                if (isHeadless) options.addArguments("-headless");
+                yield new FirefoxDriver(options);
+            }
+            case EDGE -> {
+                EdgeOptions options = new EdgeOptions();
+                if (isHeadless) options.addArguments("--headless=new");
+                yield new EdgeDriver(options);
+            }
         };
     }
 }
