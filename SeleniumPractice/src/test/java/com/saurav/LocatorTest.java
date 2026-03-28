@@ -1,77 +1,66 @@
 package com.saurav;
 
-import java.time.Duration;
-
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-public class LocatorTest {
-
-    private WebDriver driver;
-    private WebDriverWait wait;
-
-    @BeforeMethod
-    public void setUp() {
-        driver = BrowserFactory.getDriver("chrome");
-        driver.manage().window().maximize();
-        wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-    }
-
-    @AfterMethod
-    public void tearDown() {
-        if (driver != null) {
-            driver.quit();
-        }
-    }
+public class LocatorTest extends TestBase {
 
     @Test
-    public void locatorExamples() throws InterruptedException {
+    public void locatorExamples() {
         driver.get("https://rahulshettyacademy.com/locatorspractice/");
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("inputUsername"))).sendKeys("rahul");
-        driver.findElement(By.name("inputPassword")).sendKeys("hello123");
-        driver.findElement(By.className("signInBtn")).click();
-        System.out.println(wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("p.error"))).getText());
-        driver.findElement(By.linkText("Forgot your password?")).click();
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//input[@placeholder='Name']"))).sendKeys("John");
-        driver.findElement(By.cssSelector("input[placeholder='Email']")).sendKeys("john@rsa.com");
+        
+        commonActions.sendText(By.id("inputUsername"), "rahul");
+        commonActions.sendText(By.name("inputPassword"), "hello123");
+        commonActions.click(By.className("signInBtn"));
+        
+        System.out.println(commonActions.getText(By.cssSelector("p.error")));
+        
+        commonActions.click(By.linkText("Forgot your password?"));
+        
+        commonActions.sendText(By.xpath("//input[@placeholder='Name']"), "John");
+        commonActions.sendText(By.cssSelector("input[placeholder='Email']"), "john@rsa.com");
+        commonActions.click(By.xpath("//input[@type='text'][2]")); // Focus
         driver.findElement(By.xpath("//input[@type='text'][2]")).clear();
-        driver.findElement(By.cssSelector("input[type='text']:nth-child(3)")).sendKeys("john@gmail.com");
-        driver.findElement(By.xpath("//form/input[3]")).sendKeys("9864353253");
-        driver.findElement(By.cssSelector(".reset-pwd-btn")).click();
-        System.out.println(wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("form p"))).getText());
-        driver.findElement(By.xpath("//div[@class='forgot-pwd-btn-conainer']/button[1]")).click();
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("#inputUsername"))).sendKeys("rahul");
-        driver.findElement(By.cssSelector("input[type*='pass']")).sendKeys("rahulshettyacademy");
-        Thread.sleep(1000);
-        wait.until(ExpectedConditions.elementToBeClickable(By.id("chkboxOne"))).click();
-        driver.findElement(By.xpath("//button[contains(@class,'submit')]")).click();
+        commonActions.sendText(By.cssSelector("input[type='text']:nth-child(3)"), "john@gmail.com");
+        commonActions.sendText(By.xpath("//form/input[3]"), "9864353253");
+        commonActions.click(By.cssSelector(".reset-pwd-btn"));
+        
+        System.out.println(commonActions.getText(By.cssSelector("form p")));
+        
+        commonActions.click(By.xpath("//div[@class='forgot-pwd-btn-conainer']/button[1]"));
+        
+        commonActions.sendText(By.cssSelector("#inputUsername"), "rahul");
+        commonActions.sendText(By.cssSelector("input[type*='pass']"), "rahulshettyacademy");
+        
+        commonActions.click(By.id("chkboxOne"));
+        commonActions.click(By.xpath("//button[contains(@class,'submit')]"));
     }
 
     @Test
     public void locatorExamples2() {
         String name = "rahul";
         String password = getPassword();
+        
         driver.get("https://rahulshettyacademy.com/locatorspractice/");
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("inputUsername"))).sendKeys(name);
-        driver.findElement(By.name("inputPassword")).sendKeys(password);
-        driver.findElement(By.className("signInBtn")).click();
-        Assert.assertEquals(wait.until(ExpectedConditions.visibilityOfElementLocated(By.tagName("p"))).getText(), "You are successfully logged in.");
-        String userName = driver.findElement(By.cssSelector("div[class='login-container'] h2")).getText();
+        commonActions.sendText(By.id("inputUsername"), name);
+        commonActions.sendText(By.name("inputPassword"), password);
+        commonActions.click(By.className("signInBtn"));
+        
+        Assert.assertEquals(commonActions.getText(By.tagName("p")), "You are successfully logged in.");
+        String userName = commonActions.getText(By.cssSelector("div[class='login-container'] h2"));
         Assert.assertEquals(userName, "Hello " + name + ",");
-        driver.findElement(By.xpath("//*[text()='Log Out']")).click();
+        
+        commonActions.click(By.xpath("//*[text()='Log Out']"));
     }
 
     private String getPassword() {
         driver.get("https://rahulshettyacademy.com/locatorspractice/");
-        wait.until(ExpectedConditions.elementToBeClickable(By.linkText("Forgot your password?"))).click();
-        wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(".reset-pwd-btn"))).click();
-        String passwordText = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("form p"))).getText();
+        commonActions.click(By.linkText("Forgot your password?"));
+        
+        commonActions.click(By.cssSelector(".reset-pwd-btn"));
+        String passwordText = commonActions.getText(By.cssSelector("form p"));
+        
         String[] passwordArray = passwordText.split("'");
         return passwordArray[1];
     }
@@ -79,7 +68,7 @@ public class LocatorTest {
     @Test
     public void locatorExamples3() {
         driver.get("https://rahulshettyacademy.com/AutomationPractice/");
-        System.out.println(wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//header/div/button[1]/following-sibling::button[1]"))).getText());
-        System.out.println(driver.findElement(By.xpath("//header/div/button[1]/parent::div/button[2]")).getText());
+        System.out.println(commonActions.getText(By.xpath("//header/div/button[1]/following-sibling::button[1]")));
+        System.out.println(commonActions.getText(By.xpath("//header/div/button[1]/parent::div/button[2]")));
     }
 }
