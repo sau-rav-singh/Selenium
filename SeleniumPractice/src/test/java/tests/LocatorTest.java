@@ -1,7 +1,6 @@
 package tests;
 
 import org.openqa.selenium.By;
-import org.testng.Assert;
 import org.testng.annotations.Test;
 import utils.TestBase;
 
@@ -48,9 +47,9 @@ public class LocatorTest extends TestBase {
         commonActions.sendText(By.name("inputPassword"), password);
         commonActions.click(By.className("signInBtn"));
         
-        Assert.assertEquals(commonActions.getText(By.tagName("p")), "You are successfully logged in.");
+        commonActions.assertEquals(commonActions.getText(By.tagName("p")), "You are successfully logged in.", "Verify login success message");
         String userName = commonActions.getText(By.cssSelector("div[class='login-container'] h2"));
-        Assert.assertEquals(userName, "Hello " + name + ",");
+        commonActions.assertEquals(userName, "Hello " + name + ",", "Verify username in welcome message");
         
         commonActions.click(By.xpath("//*[text()='Log Out']"));
     }

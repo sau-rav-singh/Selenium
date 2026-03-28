@@ -1,7 +1,6 @@
 package tests;
 
 import org.openqa.selenium.By;
-import org.testng.Assert;
 import org.testng.annotations.Test;
 import utils.TestBase;
 
@@ -13,13 +12,13 @@ public class DropdownsTest extends TestBase {
         By currencyDropdown = By.id("ctl00_mainContent_DropDownListCurrency");
         
         commonActions.selectByIndex(currencyDropdown, 2);
-        Assert.assertEquals(commonActions.getFirstSelectedOption(currencyDropdown), "AED");
+        commonActions.assertEquals(commonActions.getFirstSelectedOption(currencyDropdown), "AED", "Verify selected currency by index 2");
         
         commonActions.selectByVisibleText(currencyDropdown, "INR");
-        Assert.assertEquals(commonActions.getFirstSelectedOption(currencyDropdown), "INR");
+        commonActions.assertEquals(commonActions.getFirstSelectedOption(currencyDropdown), "INR", "Verify selected currency by visible text 'INR'");
         
         commonActions.selectByValue(currencyDropdown, "USD");
-        Assert.assertEquals(commonActions.getFirstSelectedOption(currencyDropdown), "USD");
+        commonActions.assertEquals(commonActions.getFirstSelectedOption(currencyDropdown), "USD", "Verify selected currency by value 'USD'");
     }
 
     @Test
@@ -30,15 +29,15 @@ public class DropdownsTest extends TestBase {
         commonActions.click(By.id("hrefIncAdt"));
         
         String adultCount = commonActions.getText(By.xpath("//span[@id='spanAudlt']"));
-        Assert.assertEquals(adultCount, "2");
+        commonActions.assertEquals(adultCount, "2", "Verify adult passenger count");
         
         commonActions.click(By.id("hrefIncChd"));
         String childCount = commonActions.getText(By.xpath("//span[@id='spanChild']"));
-        Assert.assertEquals(childCount, "1");
+        commonActions.assertEquals(childCount, "1", "Verify child passenger count");
 
         commonActions.click(By.id("btnclosepaxoption"));
 
         String passengerInfo = commonActions.getText(By.id("divpaxinfo"));
-        Assert.assertEquals(passengerInfo, "2 Adult, 1 Child");
+        commonActions.assertEquals(passengerInfo, "2 Adult, 1 Child", "Verify passenger summary info");
     }
 }
