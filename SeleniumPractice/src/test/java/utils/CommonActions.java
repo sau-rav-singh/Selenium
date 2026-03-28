@@ -1,103 +1,61 @@
 package utils;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.OutputType;
-import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import org.testng.Assert;
 import com.aventstack.extentreports.ExtentTest;
-import com.aventstack.extentreports.MediaEntityBuilder;
-import com.aventstack.extentreports.Status;
 
-public class CommonActions {
+/**
+ * CommonActions now acts as a facade that composes the decorated actions.
+ * This maintains backward compatibility with existing tests.
+ */
+public class CommonActions implements Actions {
 
-    protected WebDriver driver;
-    protected WebDriverWait wait;
-    private final ExtentTest test;
+    private final Actions actions;
 
     public CommonActions(WebDriver driver, WebDriverWait wait, ExtentTest test) {
-        this.driver = driver;
-        this.wait = wait;
-        this.test = test;
+        // Compose the behavior using Decorator pattern
+        Actions baseActions = new BaseActions(driver, wait);
+        this.actions = new ReportingDecorator(baseActions, test, driver);
     }
 
-    private String captureScreenshot() {
-        return ((TakesScreenshot) driver).getScreenshotAs(OutputType.BASE64);
-    }
-
+    @Override
     public void click(By locator) {
-        test.log(Status.INFO, "Attempting to click on element: " + locator.toString());
-        wait.until(ExpectedConditions.elementToBeClickable(locator)).click();
-        test.log(Status.INFO, "Clicked on element: " + locator, 
-                MediaEntityBuilder.createScreenCaptureFromBase64String(captureScreenshot()).build());
+        actions.click(locator);
     }
 
+    @Override
     public void sendText(By locator, String text) {
-        test.log(Status.INFO, "Attempting to send text '" + text + "' to element: " + locator.toString());
-        WebElement element = wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
-        element.clear();
-        element.sendKeys(text);
-        test.log(Status.INFO, "Sent text '" + text + "' to element: " + locator,
-                MediaEntityBuilder.createScreenCaptureFromBase64String(captureScreenshot()).build());
+        actions.sendText(locator, text);
     }
 
+    @Override
     public String getText(By locator) {
-        test.log(Status.INFO, "Attempting to get text from element: " + locator.toString());
-        String text = wait.until(ExpectedConditions.visibilityOfElementLocated(locator)).getText();
-        test.log(Status.INFO, "Retrieved text '" + text + "' from element: " + locator,
-                MediaEntityBuilder.createScreenCaptureFromBase64String(captureScreenshot()).build());
-        return text;
+        return actions.getText(locator);
     }
 
+    @Override
     public void selectByVisibleText(By locator, String text) {
-        test.log(Status.INFO, "Attempting to select by visible text '" + text + "' from dropdown: " + locator.toString());
-        WebElement element = wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
-        Select select = new Select(element);
-        select.selectByVisibleText(text);
-        test.log(Status.INFO, "Selected by visible text '" + text + "' from dropdown: " + locator,
-                MediaEntityBuilder.createScreenCaptureFromBase64String(captureScreenshot()).build());
+        actions.selectByVisibleText(locator, text);
     }
 
+    @Override
     public void selectByIndex(By locator, int index) {
-        test.log(Status.INFO, "Attempting to select by index '" + index + "' from dropdown: " + locator.toString());
-        WebElement element = wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
-        Select select = new Select(element);
-        select.selectByIndex(index);
-        test.log(Status.INFO, "Selected by index '" + index + "' from dropdown: " + locator,
-                MediaEntityBuilder.createScreenCaptureFromBase64String(captureScreenshot()).build());
+        actions.selectByIndex(locator, index);
     }
 
+    @Override
     public void selectByValue(By locator, String value) {
-        test.log(Status.INFO, "Attempting to select by value '" + value + "' from dropdown: " + locator.toString());
-        WebElement element = wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
-        Select select = new Select(element);
-        select.selectByValue(value);
-        test.log(Status.INFO, "Selected by value '" + value + "' from dropdown: " + locator,
-                MediaEntityBuilder.createScreenCaptureFromBase64String(captureScreenshot()).build());
+        actions.selectByValue(locator, value);
     }
 
+    @Override
     public String getFirstSelectedOption(By locator) {
-        test.log(Status.INFO, "Attempting to get first selected option from dropdown: " + locator.toString());
-        WebElement element = wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
-        Select select = new Select(element);
-        String selectedOption = select.getFirstSelectedOption().getText();
-        test.log(Status.INFO, "Retrieved first selected option '" + selectedOption + "' from dropdown: " + locator,
-                MediaEntityBuilder.createScreenCaptureFromBase64String(captureScreenshot()).build());
-        return selectedOption;
+        return actions.getFirstSelectedOption(locator);
     }
 
+    @Override
     public void assertEquals(Object actual, Object expected, String message) {
-        try {
-            Assert.assertEquals(actual, expected, message);
-            test.log(Status.PASS, message + " - Expected: [" + expected + "] Actual: [" + actual + "]");
-        } catch (AssertionError e) {
-            test.log(Status.FAIL, message + " - Expected: [" + expected + "] Actual: [" + actual + "] - Error: " + e.getMessage(),
-                    MediaEntityBuilder.createScreenCaptureFromBase64String(captureScreenshot()).build());
-            throw e;
-        }
+        actions.assertEquals(actual, expected, message);
     }
 }
