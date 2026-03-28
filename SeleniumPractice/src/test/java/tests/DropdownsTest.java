@@ -4,6 +4,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.testng.annotations.Test;
 import base.TestBase;
+
 import java.util.List;
 
 public class DropdownsTest extends TestBase {
@@ -52,7 +53,7 @@ public class DropdownsTest extends TestBase {
     }
 
     @Test
-    public void selectCountryTest() throws InterruptedException {
+    public void selectCountryTest() {
         getDriver().get("https://rahulshettyacademy.com/dropdownsPractise/");
         actions().sendText(By.id("autosuggest"), "ind");
         List<WebElement> options = actions().findElements(By.cssSelector("li[class='ui-menu-item'] a"));
@@ -62,5 +63,13 @@ public class DropdownsTest extends TestBase {
                 break;
             }
         }
+    }
+
+    @Test
+    public void passengerTypeTest() {
+        getDriver().get("https://rahulshettyacademy.com/dropdownsPractise/");
+        actions().click(By.cssSelector("input[id*='SeniorCitizen'][type='checkbox']"));
+        actions().assertEquals(actions().findElement(By.cssSelector("input[id*='SeniorCitizen'][type='checkbox']")).isSelected(), true, "Verify Senior Citizen checkbox isSelected");
+
     }
 }

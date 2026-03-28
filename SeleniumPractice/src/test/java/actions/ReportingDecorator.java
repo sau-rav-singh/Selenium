@@ -144,4 +144,9 @@ public class ReportingDecorator implements Actions {
     public List<WebElement> findElements(By locator) {
         return decorated.findElements(locator);
     }
+
+    @Override
+    public WebElement findElement(By locator) {
+        return decorated.findElement(locator);
+    }
 }

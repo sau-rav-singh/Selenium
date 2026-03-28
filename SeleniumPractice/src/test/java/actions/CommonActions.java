@@ -5,6 +5,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import com.aventstack.extentreports.ExtentTest;
+
 import java.util.List;
 
 public class CommonActions implements Actions {
@@ -65,5 +66,10 @@ public class CommonActions implements Actions {
     @Override
     public List<WebElement> findElements(By locator) {
         return actions.findElements(locator);
+    }
+
+    @Override
+    public WebElement findElement(By locator) {
+        return actions.findElement(locator);
     }
 }

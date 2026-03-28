@@ -79,4 +79,9 @@ public class BaseActions implements Actions {
     public List<WebElement> findElements(By locator) {
         return wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(locator));
     }
+
+    @Override
+    public WebElement findElement(By locator) {
+        return wait.until(ExpectedConditions.presenceOfElementLocated(locator));
+    }
 }

@@ -91,6 +91,13 @@ public class HighlightDecorator implements Actions {
 
     @Override
     public List<WebElement> findElements(By locator) {
+        highlight(locator);
         return decorated.findElements(locator);
+    }
+
+    @Override
+    public WebElement findElement(By locator) {
+        highlight(locator);
+        return decorated.findElement(locator);
     }
 }

@@ -15,4 +15,5 @@ public interface Actions {
     String getFirstSelectedOption(By locator);
     void assertEquals(Object actual, Object expected, String message);
     List<WebElement> findElements(By locator);
+    WebElement findElement(By locator);
 }
