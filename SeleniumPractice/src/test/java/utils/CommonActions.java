@@ -5,18 +5,19 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import com.aventstack.extentreports.ExtentTest;
 
-/**
- * CommonActions now acts as a facade that composes the decorated actions.
- * This maintains backward compatibility with existing tests.
- */
 public class CommonActions implements Actions {
 
     private final Actions actions;
 
     public CommonActions(WebDriver driver, WebDriverWait wait, ExtentTest test) {
-        // Compose the behavior using Decorator pattern
+        // Base Selenium logic
         Actions baseActions = new BaseActions(driver, wait);
-        this.actions = new ReportingDecorator(baseActions, test, driver);
+        
+        // Add highlighting layer on top of base
+        Actions highlightingActions = new HighlightDecorator(baseActions, driver);
+        
+        // Add reporting layer on top of highlighting (or base)
+        this.actions = new ReportingDecorator(highlightingActions, test, driver);
     }
 
     @Override
