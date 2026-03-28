@@ -2,7 +2,7 @@ package tests;
 
 import org.openqa.selenium.By;
 import org.testng.annotations.Test;
-import utils.TestBase;
+import base.TestBase;
 
 public class LocatorTest extends TestBase {
 

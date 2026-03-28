@@ -1,4 +1,4 @@
-package utils;
+package base;
 
 import java.lang.reflect.Method;
 import java.time.Duration;
@@ -13,6 +13,9 @@ import org.testng.annotations.BeforeSuite;
 import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.ExtentTest;
 import com.aventstack.extentreports.reporter.ExtentSparkReporter;
+
+import core.BrowserFactory;
+import actions.CommonActions;
 
 public class TestBase {
 

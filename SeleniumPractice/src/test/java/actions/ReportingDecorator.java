@@ -1,4 +1,4 @@
-package utils;
+package actions;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.OutputType;
@@ -49,7 +49,6 @@ public class ReportingDecorator implements Actions {
 
     @Override
     public String getText(By locator) {
-        test.log(Status.INFO, "Attempting to get text from element: " + locator.toString());
         try {
             String text = decorated.getText(locator);
             test.log(Status.INFO, "Retrieved text '" + text + "' from element: " + locator,
@@ -64,7 +63,6 @@ public class ReportingDecorator implements Actions {
 
     @Override
     public void selectByVisibleText(By locator, String text) {
-        test.log(Status.INFO, "Attempting to select by visible text '" + text + "' from dropdown: " + locator.toString());
         try {
             decorated.selectByVisibleText(locator, text);
             test.log(Status.INFO, "Selected by visible text '" + text + "' from dropdown: " + locator,
@@ -78,7 +76,6 @@ public class ReportingDecorator implements Actions {
 
     @Override
     public void selectByIndex(By locator, int index) {
-        test.log(Status.INFO, "Attempting to select by index '" + index + "' from dropdown: " + locator.toString());
         try {
             decorated.selectByIndex(locator, index);
             test.log(Status.INFO, "Selected by index '" + index + "' from dropdown: " + locator,
@@ -92,7 +89,6 @@ public class ReportingDecorator implements Actions {
 
     @Override
     public void selectByValue(By locator, String value) {
-        test.log(Status.INFO, "Attempting to select by value '" + value + "' from dropdown: " + locator.toString());
         try {
             decorated.selectByValue(locator, value);
             test.log(Status.INFO, "Selected by value '" + value + "' from dropdown: " + locator,
@@ -106,7 +102,6 @@ public class ReportingDecorator implements Actions {
 
     @Override
     public String getFirstSelectedOption(By locator) {
-        test.log(Status.INFO, "Attempting to get first selected option from dropdown: " + locator.toString());
         try {
             String selectedOption = decorated.getFirstSelectedOption(locator);
             test.log(Status.INFO, "Retrieved first selected option '" + selectedOption + "' from dropdown: " + locator,

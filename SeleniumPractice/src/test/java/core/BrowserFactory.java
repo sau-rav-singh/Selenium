@@ -1,4 +1,4 @@
-package utils;
+package core;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -8,9 +8,6 @@ import org.openqa.selenium.edge.EdgeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
 
-/**
- * Updated BrowserFactory that respects 'headless' setting from config.properties.
- */
 public class BrowserFactory {
 
     public static WebDriver getDriver(String browserName) {

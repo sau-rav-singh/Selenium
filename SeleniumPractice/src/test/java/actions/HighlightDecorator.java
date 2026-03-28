@@ -1,4 +1,4 @@
-package utils;
+package actions;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
@@ -19,11 +19,10 @@ public class HighlightDecorator implements Actions {
             WebElement element = driver.findElement(locator);
             JavascriptExecutor js = (JavascriptExecutor) driver;
             js.executeScript("arguments[0].setAttribute('style', 'background: yellow; border: 2px solid red;');", element);
-            // Use a shorter sleep or remove it for faster execution
             Thread.sleep(100); 
             js.executeScript("arguments[0].setAttribute('style', '');", element);
         } catch (Exception e) {
-            // Ignore highlighting errors to not break the actual test
+            // Ignore highlighting errors
         }
     }
 
@@ -71,7 +70,6 @@ public class HighlightDecorator implements Actions {
 
     @Override
     public void assertEquals(Object actual, Object expected, String message) {
-        // Assertions don't usually interact with elements directly via By locator here
         decorated.assertEquals(actual, expected, message);
     }
 }

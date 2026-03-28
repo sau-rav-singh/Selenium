@@ -1,4 +1,4 @@
-package utils;
+package actions;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -10,13 +10,8 @@ public class CommonActions implements Actions {
     private final Actions actions;
 
     public CommonActions(WebDriver driver, WebDriverWait wait, ExtentTest test) {
-        // Base Selenium logic
         Actions baseActions = new BaseActions(driver, wait);
-        
-        // Add highlighting layer on top of base
         Actions highlightingActions = new HighlightDecorator(baseActions, driver);
-        
-        // Add reporting layer on top of highlighting (or base)
         this.actions = new ReportingDecorator(highlightingActions, test, driver);
     }
 

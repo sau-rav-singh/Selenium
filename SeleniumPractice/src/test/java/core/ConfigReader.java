@@ -1,4 +1,4 @@
-package utils;
+package core;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -13,7 +13,6 @@ public class ConfigReader {
             properties = new Properties();
             properties.load(fis);
         } catch (IOException e) {
-            // If file doesn't exist, we'll handle defaults in the getter
             properties = new Properties();
         }
     }
