@@ -16,11 +16,11 @@ import com.aventstack.extentreports.reporter.ExtentSparkReporter;
 
 public class TestBase {
 
-    protected WebDriver driver;
-    protected WebDriverWait wait;
-    protected CommonActions commonActions;
+    private static final ThreadLocal<WebDriver> driverThreadLocal = new ThreadLocal<>();
+    private static final ThreadLocal<ExtentTest> testThreadLocal = new ThreadLocal<>();
+    private static final ThreadLocal<WebDriverWait> waitThreadLocal = new ThreadLocal<>();
+    private static final ThreadLocal<CommonActions> actionsThreadLocal = new ThreadLocal<>();
     protected static ExtentReports extent;
-    protected ExtentTest test;
 
     @BeforeSuite
     public void setupSuite() {
@@ -31,18 +31,37 @@ public class TestBase {
 
     @BeforeMethod
     public void setUp(Method method) {
-        test = extent.createTest(method.getName());
-        driver = BrowserFactory.getDriver("chrome");
+        ExtentTest test = extent.createTest(method.getName());
+        testThreadLocal.set(test);
+
+        String browser = System.getProperty("browser", "chrome");
+        WebDriver driver = BrowserFactory.getDriver(browser);
+        driverThreadLocal.set(driver);
+
         driver.manage().window().maximize();
-        wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-        commonActions = new CommonActions(driver, wait, test);
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        waitThreadLocal.set(wait);
+        
+        actionsThreadLocal.set(new CommonActions(driver, wait, test));
+    }
+
+    public WebDriver getDriver() {
+        return driverThreadLocal.get();
+    }
+
+    public CommonActions actions() {
+        return actionsThreadLocal.get();
     }
 
     @AfterMethod
     public void tearDown() {
-        if (driver != null) {
-            driver.quit();
+        if (getDriver() != null) {
+            getDriver().quit();
         }
+        driverThreadLocal.remove();
+        testThreadLocal.remove();
+        waitThreadLocal.remove();
+        actionsThreadLocal.remove();
     }
 
     @AfterSuite

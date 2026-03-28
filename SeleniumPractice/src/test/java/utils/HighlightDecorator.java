@@ -18,11 +18,10 @@ public class HighlightDecorator implements Actions {
         try {
             WebElement element = driver.findElement(locator);
             JavascriptExecutor js = (JavascriptExecutor) driver;
-            // Apply a yellow background and red border
             js.executeScript("arguments[0].setAttribute('style', 'background: yellow; border: 2px solid red;');", element);
-            Thread.sleep(200); // Short pause to make the highlight visible
-            // Reset the style (optional, or leave it to see what was touched)
-            js.executeScript("arguments[0].setAttribute('style', 'border: 2px solid white;');", element);
+            // Use a shorter sleep or remove it for faster execution
+            Thread.sleep(100); 
+            js.executeScript("arguments[0].setAttribute('style', '');", element);
         } catch (Exception e) {
             // Ignore highlighting errors to not break the actual test
         }

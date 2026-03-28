@@ -25,11 +25,9 @@ public class ReportingDecorator implements Actions {
 
     @Override
     public void click(By locator) {
-        test.log(Status.INFO, "Attempting to click on element: " + locator.toString());
         try {
             decorated.click(locator);
-            test.log(Status.INFO, "Clicked on element: " + locator,
-                    MediaEntityBuilder.createScreenCaptureFromBase64String(captureScreenshot()).build());
+            test.log(Status.PASS, "Clicked on element: " + locator);
         } catch (Exception e) {
             test.log(Status.FAIL, "Failed to click on element: " + locator + ". Error: " + e.getMessage(),
                     MediaEntityBuilder.createScreenCaptureFromBase64String(captureScreenshot()).build());
@@ -39,11 +37,9 @@ public class ReportingDecorator implements Actions {
 
     @Override
     public void sendText(By locator, String text) {
-        test.log(Status.INFO, "Attempting to send text '" + text + "' to element: " + locator.toString());
         try {
             decorated.sendText(locator, text);
-            test.log(Status.INFO, "Sent text '" + text + "' to element: " + locator,
-                    MediaEntityBuilder.createScreenCaptureFromBase64String(captureScreenshot()).build());
+            test.log(Status.PASS, "Sent text '" + text + "' to element: " + locator);
         } catch (Exception e) {
             test.log(Status.FAIL, "Failed to send text to element: " + locator + ". Error: " + e.getMessage(),
                     MediaEntityBuilder.createScreenCaptureFromBase64String(captureScreenshot()).build());
