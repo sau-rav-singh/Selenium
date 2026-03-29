@@ -72,4 +72,24 @@ public class CommonActions implements Actions {
     public WebElement findElement(By locator) {
         return actions.findElement(locator);
     }
+
+    @Override
+    public void acceptAlert() {
+        actions.acceptAlert();
+    }
+
+    @Override
+    public void dismissAlert() {
+        actions.dismissAlert();
+    }
+
+    @Override
+    public String getAlertText() {
+        return actions.getAlertText();
+    }
+
+    @Override
+    public void sendTextToAlert(String text) {
+        actions.sendTextToAlert(text);
+    }
 }

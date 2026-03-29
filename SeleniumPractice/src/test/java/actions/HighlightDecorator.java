@@ -29,7 +29,7 @@ public class HighlightDecorator implements Actions {
         try {
             JavascriptExecutor js = (JavascriptExecutor) driver;
             js.executeScript("arguments[0].setAttribute('style', 'background: yellow; border: 2px solid red;');", element);
-            Thread.sleep(100); 
+            Thread.sleep(100);
             js.executeScript("arguments[0].setAttribute('style', '');", element);
         } catch (Exception e) {
             // Ignore highlighting errors
@@ -69,7 +69,7 @@ public class HighlightDecorator implements Actions {
     @Override
     public void selectByIndex(By locator, int index) {
         highlight(locator);
-        decorated.selectByIndex(locator,index);
+        decorated.selectByIndex(locator, index);
     }
 
     @Override
@@ -99,5 +99,25 @@ public class HighlightDecorator implements Actions {
     public WebElement findElement(By locator) {
         highlight(locator);
         return decorated.findElement(locator);
+    }
+
+    @Override
+    public void acceptAlert() {
+        decorated.acceptAlert();
+    }
+
+    @Override
+    public void dismissAlert() {
+        decorated.dismissAlert();
+    }
+
+    @Override
+    public String getAlertText() {
+        return decorated.getAlertText();
+    }
+
+    @Override
+    public void sendTextToAlert(String text) {
+        decorated.sendTextToAlert(text);
     }
 }

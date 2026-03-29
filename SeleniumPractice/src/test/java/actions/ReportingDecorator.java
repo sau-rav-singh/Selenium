@@ -149,4 +149,49 @@ public class ReportingDecorator implements Actions {
     public WebElement findElement(By locator) {
         return decorated.findElement(locator);
     }
+
+    @Override
+    public void acceptAlert() {
+        try {
+            decorated.acceptAlert();
+            test.log(Status.PASS, "Alert accepted");
+        } catch (Exception e) {
+            test.log(Status.FAIL, "Failed to accept alert. Error: " + e.getMessage());
+            throw e;
+        }
+    }
+
+    @Override
+    public void dismissAlert() {
+        try {
+            decorated.dismissAlert();
+            test.log(Status.PASS, "Alert dismissed");
+        } catch (Exception e) {
+            test.log(Status.FAIL, "Failed to dismiss alert. Error: " + e.getMessage());
+            throw e;
+        }
+    }
+
+    @Override
+    public String getAlertText() {
+        try {
+            String text = decorated.getAlertText();
+            test.log(Status.INFO, "Alert text: " + text);
+            return text;
+        } catch (Exception e) {
+            test.log(Status.FAIL, "Failed to get alert text. Error: " + e.getMessage());
+            throw e;
+        }
+    }
+
+    @Override
+    public void sendTextToAlert(String text) {
+        try {
+            decorated.sendTextToAlert(text);
+            test.log(Status.PASS, "Sent text to alert: " + text);
+        } catch (Exception e) {
+            test.log(Status.FAIL, "Failed to send text to alert. Error: " + e.getMessage());
+            throw e;
+        }
+    }
 }

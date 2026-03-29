@@ -50,6 +50,15 @@ public class DropdownsTest extends TestBase {
         actions().click(By.id("ctl00_mainContent_ddl_originStation1_CTXT"));
         actions().click(By.xpath("//a[@value='DEL']"));
         actions().click(By.xpath("//div[@id='glsctl00_mainContent_ddl_destinationStation1_CTNR'] //a[@value='MAA']"));//"(//a[@value='MAA'])[2]"
+        actions().click(By.cssSelector("a.ui-state-active"));
+        actions().click(By.id("ctl00_mainContent_rbtnl_Trip_1"));
+        actions().click(By.id("Div1"));
+        actions().click(By.cssSelector("a.ui-state-active"));
+        try {
+            Thread.sleep(5000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Test

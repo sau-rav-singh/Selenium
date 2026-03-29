@@ -84,4 +84,24 @@ public class BaseActions implements Actions {
     public WebElement findElement(By locator) {
         return wait.until(ExpectedConditions.presenceOfElementLocated(locator));
     }
+
+    @Override
+    public void acceptAlert() {
+        wait.until(ExpectedConditions.alertIsPresent()).accept();
+    }
+
+    @Override
+    public void dismissAlert() {
+        wait.until(ExpectedConditions.alertIsPresent()).dismiss();
+    }
+
+    @Override
+    public String getAlertText() {
+        return wait.until(ExpectedConditions.alertIsPresent()).getText();
+    }
+
+    @Override
+    public void sendTextToAlert(String text) {
+        wait.until(ExpectedConditions.alertIsPresent()).sendKeys(text);
+    }
 }
