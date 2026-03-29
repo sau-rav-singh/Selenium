@@ -72,4 +72,9 @@ public class CommonActions implements Actions {
     public WebElement findElement(By locator) {
         return actions.findElement(locator);
     }
+
+    @Override
+    public void deleteAllCookies() {
+        actions.deleteAllCookies();
+    }
 }

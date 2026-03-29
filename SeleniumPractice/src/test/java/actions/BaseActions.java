@@ -84,4 +84,9 @@ public class BaseActions implements Actions {
     public WebElement findElement(By locator) {
         return wait.until(ExpectedConditions.presenceOfElementLocated(locator));
     }
+
+    @Override
+    public void deleteAllCookies() {
+        driver.manage().deleteAllCookies();
+    }
 }
