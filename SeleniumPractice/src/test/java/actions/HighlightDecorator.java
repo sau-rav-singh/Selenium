@@ -100,9 +100,4 @@ public class HighlightDecorator implements Actions {
         highlight(locator);
         return decorated.findElement(locator);
     }
-
-    @Override
-    public void deleteAllCookies() {
-        decorated.deleteAllCookies();
-    }
 }

@@ -16,6 +16,4 @@ public interface Actions {
     void assertEquals(Object actual, Object expected, String message);
     List<WebElement> findElements(By locator);
     WebElement findElement(By locator);
-
-    void deleteAllCookies();
 }

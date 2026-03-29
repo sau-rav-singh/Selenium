@@ -149,16 +149,4 @@ public class ReportingDecorator implements Actions {
     public WebElement findElement(By locator) {
         return decorated.findElement(locator);
     }
-
-    @Override
-    public void deleteAllCookies() {
-        try {
-            decorated.deleteAllCookies();
-            test.log(Status.INFO, "All cookies deleted.");
-        } catch (Exception e) {
-            test.log(Status.FAIL, "Failed to delete cookies. Error: " + e.getMessage(),
-                    MediaEntityBuilder.createScreenCaptureFromBase64String(captureScreenshot()).build());
-            throw e;
-        }
-    }
 }
