@@ -1,6 +1,6 @@
-# Selenium Automation Framework Architecture (Refactored for SRP)
+# Selenium Automation Framework Architecture
 
-This document describes the architectural design and code flow of the Selenium automation framework, recently refactored to adhere to the **Single Responsibility Principle (SRP)**.
+This document describes the architectural design and code flow of the Selenium automation framework.
 
 ## Framework Components (SRP-Compliant)
 
