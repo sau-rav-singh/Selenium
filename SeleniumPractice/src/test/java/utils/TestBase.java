@@ -16,14 +16,14 @@ public class TestBase {
 
     @BeforeMethod
     public void setUp(Method method) {
-        ExtentTest test = ExtentReportListener.getExtent().createTest(method.getName());
+        ExtentTest test = ExtentReportListener.extent.createTest(method.getName());
         ExtentManager.setExtentTest(test);
-        
+
         String browser = ConfigReader.getBrowser();
         DriverManager.setDriver(browser, test);
-        
+
         getDriver().manage().window().maximize();
-        
+
         String baseUrl = ConfigReader.getBaseUrl();
         if (baseUrl != null && !baseUrl.isEmpty()) {
             getDriver().get(baseUrl);
