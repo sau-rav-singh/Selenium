@@ -1,6 +1,6 @@
 package tests;
 
-import base.TestBase;
+import utils.TestBase;
 import org.openqa.selenium.By;
 import org.testng.Assert;
 import org.testng.annotations.Test;

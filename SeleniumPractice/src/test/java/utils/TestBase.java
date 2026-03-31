@@ -1,4 +1,4 @@
-package base;
+package utils;
 
 import java.lang.reflect.Method;
 
@@ -13,9 +13,6 @@ import org.testng.annotations.Listeners;
 import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.reporter.ExtentSparkReporter;
 
-import utils.ConfigReader;
-import utils.CommonActions;
-import utils.DriverManager;
 import listeners.TestListener;
 
 @Listeners(TestListener.class)

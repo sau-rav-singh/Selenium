@@ -3,7 +3,7 @@ package tests;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.testng.annotations.Test;
-import base.TestBase;
+import utils.TestBase;
 
 import java.util.List;
 
