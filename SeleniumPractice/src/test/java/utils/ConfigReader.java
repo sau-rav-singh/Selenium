@@ -11,13 +11,12 @@ public class ConfigReader {
         try (FileInputStream fis = new FileInputStream("src/test/resources/config.properties")) {
             properties.load(fis);
         } catch (IOException e) {
-            // Log or handle error: properties file not found
             System.err.println("Warning: config.properties not found at src/test/resources/config.properties. Using system properties or defaults.");
         }
     }
 
     public static String getProperty(String key, String defaultValue) {
-        String value = System.getProperty(key); // Check System properties first (CLI overrides)
+        String value = System.getProperty(key);
         if (value == null) {
             value = properties.getProperty(key);
         }
