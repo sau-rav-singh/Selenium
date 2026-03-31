@@ -1,11 +1,9 @@
 package base;
 
 import java.lang.reflect.Method;
-import java.time.Duration;
 
-import utils.CommonActions;
+import com.aventstack.extentreports.ExtentTest;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeMethod;
@@ -13,22 +11,16 @@ import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.Listeners;
 
 import com.aventstack.extentreports.ExtentReports;
-import com.aventstack.extentreports.ExtentTest;
 import com.aventstack.extentreports.reporter.ExtentSparkReporter;
 
-import utils.BrowserFactory;
-import listeners.DriverListener;
+import utils.ConfigReader;
+import utils.CommonActions;
+import utils.DriverManager;
 import listeners.TestListener;
-import org.openqa.selenium.support.events.EventFiringDecorator;
 
 @Listeners(TestListener.class)
 public class TestBase {
 
-    protected static final ThreadLocal<WebDriver> driverThreadLocal = new ThreadLocal<>();
-    protected static final ThreadLocal<WebDriver> unDecoratedDriverThreadLocal = new ThreadLocal<>();
-    protected static final ThreadLocal<ExtentTest> testThreadLocal = new ThreadLocal<>();
-    protected static final ThreadLocal<WebDriverWait> waitThreadLocal = new ThreadLocal<>();
-    protected static final ThreadLocal<CommonActions> COMMON_ACTIONS_THREAD_LOCAL = new ThreadLocal<>();
     protected static ExtentReports extent;
 
     @BeforeSuite
@@ -41,48 +33,34 @@ public class TestBase {
     @BeforeMethod
     public void setUp(Method method) {
         ExtentTest test = extent.createTest(method.getName());
-        testThreadLocal.set(test);
-
-        String browser = System.getProperty("browser", "chrome");
-        WebDriver driver = BrowserFactory.getDriver(browser);
+        DriverManager.setTest(test);
         
-        // Store the undecorated driver
-        unDecoratedDriverThreadLocal.set(driver);
-
-        DriverListener listener = new DriverListener(driver, test);
-        driver = new EventFiringDecorator<>(listener).decorate(driver);
-        driverThreadLocal.set(driver);
-
-        driver.manage().window().maximize();
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-        waitThreadLocal.set(wait);
+        String browser = ConfigReader.getBrowser();
+        DriverManager.setDriver(browser, test);
         
-        CommonActions commonActions = new CommonActions(driver, wait);
-        COMMON_ACTIONS_THREAD_LOCAL.set(commonActions);
+        getDriver().manage().window().maximize();
+        
+        String baseUrl = ConfigReader.getBaseUrl();
+        if (baseUrl != null && !baseUrl.isEmpty()) {
+            getDriver().get(baseUrl);
+        }
     }
 
     public WebDriver getDriver() {
-        return driverThreadLocal.get();
+        return DriverManager.getDriver();
     }
 
     public WebDriver getUnDecoratedDriver() {
-        return unDecoratedDriverThreadLocal.get();
+        return DriverManager.getUnDecoratedDriver();
     }
 
     public CommonActions commonActions() {
-        return COMMON_ACTIONS_THREAD_LOCAL.get();
+        return DriverManager.getCommonActions();
     }
 
     @AfterMethod
     public void tearDown() {
-        if (getDriver() != null) {
-            getDriver().quit();
-        }
-        driverThreadLocal.remove();
-        unDecoratedDriverThreadLocal.remove();
-        testThreadLocal.remove();
-        waitThreadLocal.remove();
-        COMMON_ACTIONS_THREAD_LOCAL.remove();
+        DriverManager.quitDriver();
     }
 
     @AfterSuite

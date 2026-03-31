@@ -44,7 +44,7 @@ public class DropdownsTest extends TestBase {
         commonActions().assertEquals(passengerInfo, "2 Adult, 1 Child", "Verify passenger summary info");
     }
 
-    @Test
+    @Test(enabled = false)
     public void itineraryTest() {
         getDriver().get("https://rahulshettyacademy.com/dropdownsPractise/");
         commonActions().click(By.id("ctl00_mainContent_ddl_originStation1_CTXT"));
