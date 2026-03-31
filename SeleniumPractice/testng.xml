@@ -5,6 +5,7 @@
         <classes>
             <class name="tests.LocatorTest"/>
             <class name="tests.DropdownsTest"/>
+            <class name="tests.AlertTest"/>
         </classes>
     </test>
 </suite>
