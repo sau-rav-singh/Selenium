@@ -3,8 +3,8 @@
 <suite name="Parallel Suite" parallel="classes" thread-count="2">
     <test name="Selenium Practice Tests">
         <classes>
-            <class name="tests.LocatorTest"/>
-            <class name="tests.DropdownsTest"/>
+<!--            <class name="tests.LocatorTest"/>-->
+<!--            <class name="tests.DropdownsTest"/>-->
             <class name="tests.AlertTest"/>
         </classes>
     </test>

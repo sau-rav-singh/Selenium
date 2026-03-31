@@ -30,7 +30,7 @@ public class TestBase {
     @BeforeMethod
     public void setUp(Method method) {
         ExtentTest test = extent.createTest(method.getName());
-        DriverManager.setTest(test);
+        DriverManager.setExtentTest(test);
         
         String browser = ConfigReader.getBrowser();
         DriverManager.setDriver(browser, test);
