@@ -11,11 +11,11 @@ public class AlertTest extends TestBase {
     public void triggerAlertTest() {
         getDriver().get("https://rahulshettyacademy.com/AutomationPractice/");
         String text = "saurav";
-        actions().sendText(By.id("name"), text);
+        commonActions().sendText(By.id("name"), text);
         getUnDecoratedDriver().findElement(By.id("alertbtn")).click();
-        String alertText = actions().getAlertText();
+        String alertText = commonActions().getAlertText();
         System.out.println("Text is " + alertText);
         Assert.assertTrue(alertText.contains(text));
-        actions().acceptAlert();
+        commonActions().acceptAlert();
     }
 }

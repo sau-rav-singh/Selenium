@@ -10,31 +10,31 @@ public class LocatorTest extends TestBase {
     public void locatorExamples() {
         getDriver().get("https://rahulshettyacademy.com/locatorspractice/");
 
-        actions().sendText(By.id("inputUsername"), "rahul");
-        actions().sendText(By.name("inputPassword"), "hello123");
-        actions().click(By.className("signInBtn"));
+        commonActions().sendText(By.id("inputUsername"), "rahul");
+        commonActions().sendText(By.name("inputPassword"), "hello123");
+        commonActions().click(By.className("signInBtn"));
         
-        System.out.println(actions().getText(By.cssSelector("p.error")));
+        System.out.println(commonActions().getText(By.cssSelector("p.error")));
         
-        actions().click(By.linkText("Forgot your password?"));
+        commonActions().click(By.linkText("Forgot your password?"));
         
-        actions().sendText(By.xpath("//input[@placeholder='Name']"), "John");
-        actions().sendText(By.cssSelector("input[placeholder='Email']"), "john@rsa.com");
-        actions().click(By.xpath("//input[@type='text'][2]")); // Focus
+        commonActions().sendText(By.xpath("//input[@placeholder='Name']"), "John");
+        commonActions().sendText(By.cssSelector("input[placeholder='Email']"), "john@rsa.com");
+        commonActions().click(By.xpath("//input[@type='text'][2]")); // Focus
         getDriver().findElement(By.xpath("//input[@type='text'][2]")).clear();
-        actions().sendText(By.cssSelector("input[type='text']:nth-child(3)"), "john@gmail.com");
-        actions().sendText(By.xpath("//form/input[3]"), "9864353253");
-        actions().click(By.cssSelector(".reset-pwd-btn"));
+        commonActions().sendText(By.cssSelector("input[type='text']:nth-child(3)"), "john@gmail.com");
+        commonActions().sendText(By.xpath("//form/input[3]"), "9864353253");
+        commonActions().click(By.cssSelector(".reset-pwd-btn"));
         
-        System.out.println(actions().getText(By.cssSelector("form p")));
+        System.out.println(commonActions().getText(By.cssSelector("form p")));
         
-        actions().click(By.xpath("//div[@class='forgot-pwd-btn-conainer']/button[1]"));
+        commonActions().click(By.xpath("//div[@class='forgot-pwd-btn-conainer']/button[1]"));
         
-        actions().sendText(By.cssSelector("#inputUsername"), "rahul");
-        actions().sendText(By.cssSelector("input[type*='pass']"), "rahulshettyacademy");
+        commonActions().sendText(By.cssSelector("#inputUsername"), "rahul");
+        commonActions().sendText(By.cssSelector("input[type*='pass']"), "rahulshettyacademy");
         
-        actions().click(By.id("chkboxOne"));
-        actions().click(By.xpath("//button[contains(@class,'submit')]"));
+        commonActions().click(By.id("chkboxOne"));
+        commonActions().click(By.xpath("//button[contains(@class,'submit')]"));
     }
 
     @Test
@@ -43,23 +43,23 @@ public class LocatorTest extends TestBase {
         String password = getPassword();
 
         getDriver().get("https://rahulshettyacademy.com/locatorspractice/");
-        actions().sendText(By.id("inputUsername"), name);
-        actions().sendText(By.name("inputPassword"), password);
-        actions().click(By.className("signInBtn"));
+        commonActions().sendText(By.id("inputUsername"), name);
+        commonActions().sendText(By.name("inputPassword"), password);
+        commonActions().click(By.className("signInBtn"));
         
-        actions().assertEquals(actions().getText(By.tagName("p")), "You are successfully logged in.", "Verify login success message");
-        String userName = actions().getText(By.cssSelector("div[class='login-container'] h2"));
-        actions().assertEquals(userName, "Hello " + name + ",", "Verify username in welcome message");
+        commonActions().assertEquals(commonActions().getText(By.tagName("p")), "You are successfully logged in.", "Verify login success message");
+        String userName = commonActions().getText(By.cssSelector("div[class='login-container'] h2"));
+        commonActions().assertEquals(userName, "Hello " + name + ",", "Verify username in welcome message");
         
-        actions().click(By.xpath("//*[text()='Log Out']"));
+        commonActions().click(By.xpath("//*[text()='Log Out']"));
     }
 
     private String getPassword() {
         getDriver().get("https://rahulshettyacademy.com/locatorspractice/");
-        actions().click(By.linkText("Forgot your password?"));
+        commonActions().click(By.linkText("Forgot your password?"));
         
-        actions().click(By.cssSelector(".reset-pwd-btn"));
-        String passwordText = actions().getText(By.cssSelector("form p"));
+        commonActions().click(By.cssSelector(".reset-pwd-btn"));
+        String passwordText = commonActions().getText(By.cssSelector("form p"));
         
         String[] passwordArray = passwordText.split("'");
         return passwordArray[1];
@@ -68,7 +68,7 @@ public class LocatorTest extends TestBase {
     @Test
     public void locatorExamples3() {
         getDriver().get("https://rahulshettyacademy.com/AutomationPractice/");
-        System.out.println(actions().getText(By.xpath("//header/div/button[1]/following-sibling::button[1]")));
-        System.out.println(actions().getText(By.xpath("//header/div/button[1]/parent::div/button[2]")));
+        System.out.println(commonActions().getText(By.xpath("//header/div/button[1]/following-sibling::button[1]")));
+        System.out.println(commonActions().getText(By.xpath("//header/div/button[1]/parent::div/button[2]")));
     }
 }

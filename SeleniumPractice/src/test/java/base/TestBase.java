@@ -69,7 +69,7 @@ public class TestBase {
         return unDecoratedDriverThreadLocal.get();
     }
 
-    public CommonActions actions() {
+    public CommonActions commonActions() {
         return COMMON_ACTIONS_THREAD_LOCAL.get();
     }
 
