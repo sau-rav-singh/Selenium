@@ -3,34 +3,21 @@ package utils;
 import java.lang.reflect.Method;
 
 import com.aventstack.extentreports.ExtentTest;
+import listeners.ExtentReportListener;
 import org.openqa.selenium.WebDriver;
 import org.testng.annotations.AfterMethod;
-import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.Listeners;
-
-import com.aventstack.extentreports.ExtentReports;
-import com.aventstack.extentreports.reporter.ExtentSparkReporter;
 
 import listeners.TestListener;
 
-@Listeners(TestListener.class)
+@Listeners({TestListener.class, ExtentReportListener.class})
 public class TestBase {
-
-    protected static ExtentReports extent;
-
-    @BeforeSuite
-    public void setupSuite() {
-        ExtentSparkReporter spark = new ExtentSparkReporter("target/ExtentReport.html");
-        extent = new ExtentReports();
-        extent.attachReporter(spark);
-    }
 
     @BeforeMethod
     public void setUp(Method method) {
-        ExtentTest test = extent.createTest(method.getName());
-        DriverManager.setExtentTest(test);
+        ExtentTest test = ExtentReportListener.getExtent().createTest(method.getName());
+        ExtentManager.setExtentTest(test);
         
         String browser = ConfigReader.getBrowser();
         DriverManager.setDriver(browser, test);
@@ -58,10 +45,6 @@ public class TestBase {
     @AfterMethod
     public void tearDown() {
         DriverManager.quitDriver();
-    }
-
-    @AfterSuite
-    public void tearDownSuite() {
-        extent.flush();
+        ExtentManager.removeExtentTest();
     }
 }

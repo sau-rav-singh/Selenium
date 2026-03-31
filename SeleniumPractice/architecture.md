@@ -1,78 +1,68 @@
-# Test Automation Framework Architecture
+# Selenium Automation Framework Architecture (Refactored for SRP)
 
-This document provides a high-level overview of the Selenium-Java test automation framework to help new team members understand its structure and execution flow.
+This document describes the architectural design and code flow of the Selenium automation framework, recently refactored to adhere to the **Single Responsibility Principle (SRP)**.
 
-## 🏗️ Framework Structure
+## Framework Components (SRP-Compliant)
 
-The framework is built using **Java**, **Selenium WebDriver**, **TestNG**, and **Maven**. It follows a modular design for scalability and maintainability.
+### 1. `DriverFactory` (Creation Logic)
+- **Role**: Solely responsible for instantiating the correct `WebDriver` instance.
+- **Functionality**: Contains the logic for Chrome, Firefox, and Edge configurations, including headless modes and options.
 
-### Key Components:
+### 2. `DriverManager` (Lifecycle & Thread-Safety)
+- **Role**: Manages the `ThreadLocal` storage and lifecycle of the active `WebDriver` session.
+- **Functionality**: 
+  - `setDriver()`: Uses `DriverFactory` to create a driver, wraps it with listeners, and stores it in `ThreadLocal`.
+  - `getDriver()`: Provides thread-safe access to the decorated driver.
+  - `quitDriver()`: Safely closes the session and clears thread storage.
 
-1.  **`base/TestBase.java`**:
-    *   The core configuration class that all test classes must extend.
-    *   Handles the lifecycle of tests using TestNG annotations (`@BeforeSuite`, `@BeforeMethod`, `@AfterMethod`, `@AfterSuite`).
-    *   Initializes reporting and driver setup.
+### 3. `ExtentManager` (Reporting State)
+- **Role**: Dedicated manager for the `ThreadLocal<ExtentTest>` instance.
+- **Functionality**: Provides a single point of access for logging from any class without needing to pass the `test` object around.
 
-2.  **`utils/DriverManager.java`**:
-    *   **Thread-Safe Management**: Uses `ThreadLocal` to ensure that each test run in parallel has its own isolated WebDriver instance.
-    *   **Centralized Access**: Provides static methods to get the current driver, wait, and common actions.
+### 4. `ExtentReportListener` (Global Reporting Lifecycle)
+- **Role**: Implements TestNG's `ISuiteListener`.
+- **Functionality**:
+  - `onStart()`: Initializes the `ExtentReports` engine and Spark Reporter before the suite begins.
+  - `onFinish()`: Flushes the report after all tests complete.
 
-3.  **`utils/CommonActions.java`**:
-    *   A wrapper around standard Selenium commands (click, sendKeys, select, etc.).
-    *   **Robustness**: Implements "Safe Actions" that automatically handle `StaleElementReferenceException` and wait for element visibility/clickability.
-    *   **Logging**: Every UI interaction is automatically logged to the console via SLF4J.
+### 5. `TestListener` (Test Event Logging)
+- **Role**: Implements `ITestListener` to capture the outcome of individual test methods.
+- **Functionality**: Automatically logs Pass, Fail (with screenshots), and Skip statuses to the `ExtentManager`.
 
-4.  **`utils/ConfigReader.java` & `config.properties`**:
-    *   **Unified Configuration**: Manages environment settings like `browser`, `headless`, `timeout`, and `baseUrl`.
-    *   **CLI Overrides**: Allows overriding configurations via command line (e.g., `mvn test -Dbrowser=firefox`).
+### 6. `TestBase` (Test Orchestrator)
+- **Role**: Acts as the base class for all test scripts.
+- **Functionality**: 
+  - Focuses strictly on the **test-level setup and teardown** (`@BeforeMethod` / `@AfterMethod`).
+  - Orchestrates between `ExtentManager`, `DriverManager`, and `ConfigReader` to prepare the environment.
 
-5.  **`utils/BrowserFactory.java`**:
-    *   Responsible for instantiating the specific WebDriver (Chrome, Firefox, Edge) based on configuration.
+### 7. `DriverListener` (Selenium Event Decorator)
+- **Role**: Implements `WebDriverListener` for "Invisible Logging."
+- **Functionality**: Automatically intercepts clicks and inputs to highlight elements and log screenshots to the report.
 
-6.  **`listeners/`**:
-    *   **TestListener**: Captures test success/failure and logs them to ExtentReports.
-    *   **DriverListener**: Uses Selenium's `EventFiringDecorator` to intercept driver events for automated logging and screenshots.
+## Refactored Code Flow
 
----
+### 1. Suite Startup
+- `ExtentReportListener.onStart()` runs. The `ExtentReports` engine is ready.
 
-## 🔄 Execution Flow
+### 2. Test Setup (`@BeforeMethod`)
+- `TestBase.setUp()` is called.
+- It asks `ExtentReportListener` to create a new test node.
+- It saves that node in `ExtentManager`.
+- It asks `DriverManager` to initialize the browser. `DriverManager` uses `DriverFactory` to get the raw driver, then decorates it.
 
-When you run a test (e.g., `mvn test` or running a test method in IntelliJ):
+### 3. Execution
+- Test scripts interact with the browser.
+- `DriverListener` automatically logs every action to the `ExtentTest` stored in `ExtentManager`.
 
-1.  **Suite Setup**: `TestBase.setupSuite()` initializes the **ExtentReports** engine.
-2.  **Method Setup**: Before each test method:
-    *   `TestBase.setUp()` is called.
-    *   `ConfigReader` fetches the browser and timeout settings.
-    *   `DriverManager` requests a new driver from `BrowserFactory`.
-    *   A `DriverListener` is attached to the driver for automated logging.
-    *   The driver is stored in a `ThreadLocal` variable for the current thread.
-3.  **Test Execution**:
-    *   The test method executes logic.
-    *   UI interactions are performed through `commonActions()`, which ensures elements are ready and logs every step.
-4.  **Method Teardown**:
-    *   `TestBase.tearDown()` calls `DriverManager.quitDriver()`.
-    *   The browser is closed, and the `ThreadLocal` storage is cleared to prevent memory leaks.
-5.  **Suite Teardown**: `TestBase.tearDownSuite()` flushes the ExtentReport to `target/ExtentReport.html`.
+### 4. Test Completion
+- `TestListener` logs the final result.
+- `TestBase.tearDown()` runs. It calls `DriverManager.quitDriver()` and `ExtentManager.removeExtentTest()` to prevent memory leaks and thread cross-talk.
 
----
+### 5. Suite Finish
+- `ExtentReportListener.onFinish()` runs. The HTML report is generated.
 
-## 🚀 How to Add a New Test
-
-1.  **Locators**: (Recommended) Create a Page Object class in `src/main/java/pageObjects`.
-2.  **Test Class**: Create a class in `src/test/java/tests/` that extends `TestBase`.
-3.  **Code**: Use `getDriver()` to navigate and `commonActions()` to interact with elements.
-
-```java
-public class MyNewTest extends TestBase {
-    @Test
-    public void exampleTest() {
-        getDriver().get("https://example.com");
-        commonActions().click(By.id("submit"));
-        // Assertions...
-    }
-}
-```
-
-## 📊 Reporting & Logs
-*   **HTML Report**: Found in `target/ExtentReport.html` after execution.
-*   **Console Logs**: Real-time execution details are printed to the IDE/Terminal console.
+## Benefits of this Architecture
+- **Maintainability**: Each class has exactly one reason to change.
+- **Scalability**: New browsers are added in `DriverFactory`; new reporting tools are added via new listeners.
+- **Robustness**: Strict use of `ThreadLocal` across managers ensures zero interference during parallel execution.
+- **Clean Tests**: Test scripts remain focused on business logic, with all infrastructure concerns handled by the base and listeners.
