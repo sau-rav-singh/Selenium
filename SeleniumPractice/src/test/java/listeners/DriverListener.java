@@ -34,6 +34,10 @@ public class DriverListener implements WebDriverListener {
         return ((TakesScreenshot) driver).getScreenshotAs(OutputType.BASE64);
     }
 
+    private void logWithScreenshot(Status status, String message) {
+        test.log(status, message, MediaEntityBuilder.createScreenCaptureFromBase64String(captureScreenshot()).build());
+    }
+
     @Override
     public void beforeClick(WebElement element) {
         highlight(element);
@@ -41,7 +45,7 @@ public class DriverListener implements WebDriverListener {
 
     @Override
     public void afterClick(WebElement element) {
-        test.log(Status.PASS, "Clicked on element");
+        logWithScreenshot(Status.PASS, "Clicked on element");
     }
 
     @Override
@@ -51,7 +55,7 @@ public class DriverListener implements WebDriverListener {
 
     @Override
     public void afterSendKeys(WebElement element, CharSequence... keys) {
-        test.log(Status.PASS, "Sent text to element",MediaEntityBuilder.createScreenCaptureFromBase64String(captureScreenshot()).build());
+        logWithScreenshot(Status.PASS, "Sent text to element");
     }
 
     @Override
@@ -61,8 +65,6 @@ public class DriverListener implements WebDriverListener {
 
     @Override
     public void afterGetText(WebElement element, String result) {
-        test.log(Status.INFO, "Retrieved text '" + result + "' from element",
-                MediaEntityBuilder.createScreenCaptureFromBase64String(captureScreenshot()).build());
+        logWithScreenshot(Status.INFO, "Retrieved text '" + result + "' from element");
     }
-
 }

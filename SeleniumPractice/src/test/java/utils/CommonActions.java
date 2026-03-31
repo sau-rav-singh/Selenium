@@ -34,6 +34,7 @@ public class CommonActions {
     }
 
     public String getAlertText() {
+        wait.until(ExpectedConditions.alertIsPresent());
         return driver.switchTo().alert().getText();
     }
 

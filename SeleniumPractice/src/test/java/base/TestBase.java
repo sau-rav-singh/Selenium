@@ -25,6 +25,7 @@ import org.openqa.selenium.support.events.EventFiringDecorator;
 public class TestBase {
 
     protected static final ThreadLocal<WebDriver> driverThreadLocal = new ThreadLocal<>();
+    protected static final ThreadLocal<WebDriver> unDecoratedDriverThreadLocal = new ThreadLocal<>();
     protected static final ThreadLocal<ExtentTest> testThreadLocal = new ThreadLocal<>();
     protected static final ThreadLocal<WebDriverWait> waitThreadLocal = new ThreadLocal<>();
     protected static final ThreadLocal<CommonActions> COMMON_ACTIONS_THREAD_LOCAL = new ThreadLocal<>();
@@ -44,6 +45,9 @@ public class TestBase {
 
         String browser = System.getProperty("browser", "chrome");
         WebDriver driver = BrowserFactory.getDriver(browser);
+        
+        // Store the undecorated driver
+        unDecoratedDriverThreadLocal.set(driver);
 
         DriverListener listener = new DriverListener(driver, test);
         driver = new EventFiringDecorator<>(listener).decorate(driver);
@@ -61,6 +65,10 @@ public class TestBase {
         return driverThreadLocal.get();
     }
 
+    public WebDriver getUnDecoratedDriver() {
+        return unDecoratedDriverThreadLocal.get();
+    }
+
     public CommonActions actions() {
         return COMMON_ACTIONS_THREAD_LOCAL.get();
     }
@@ -71,6 +79,7 @@ public class TestBase {
             getDriver().quit();
         }
         driverThreadLocal.remove();
+        unDecoratedDriverThreadLocal.remove();
         testThreadLocal.remove();
         waitThreadLocal.remove();
         COMMON_ACTIONS_THREAD_LOCAL.remove();
