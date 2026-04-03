@@ -50,7 +50,12 @@ public class CommonActions {
 
     public String getText(By locator) {
         logger.info("Getting text from locator {}", locator);
-        return waitForVisibility(locator).getText();
+        return waitForVisibility(locator).getText().toLowerCase();
+    }
+
+    public String getText(WebElement webElement) {
+        logger.info("Getting text from WebElement");
+        return waitForVisibility(webElement).getText().toLowerCase();
     }
 
     public void selectByVisibleText(By locator, String text) {
@@ -90,7 +95,14 @@ public class CommonActions {
         return wait.until(ExpectedConditions.presenceOfElementLocated(locator));
     }
 
-    // Helper methods for robust waiting
+    public void staticWait(int seconds) {
+        try {
+            Thread.sleep(seconds * 1000L);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     private WebElement waitForClickable(By locator) {
         return wait.ignoring(StaleElementReferenceException.class)
                 .until(ExpectedConditions.elementToBeClickable(locator));
@@ -99,5 +111,10 @@ public class CommonActions {
     private WebElement waitForVisibility(By locator) {
         return wait.ignoring(StaleElementReferenceException.class)
                 .until(ExpectedConditions.visibilityOfElementLocated(locator));
+    }
+
+    private WebElement waitForVisibility(WebElement webElement) {
+        return wait.ignoring(StaleElementReferenceException.class)
+                .until(ExpectedConditions.visibilityOf(webElement));
     }
 }
