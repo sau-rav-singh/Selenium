@@ -10,6 +10,8 @@ public class ECommerceTest extends TestBase {
     public void placeOrder() {
         ECommercePage eCommercePage = new ECommercePage(commonActions());
         String productPurchased = "Beans";
+        String[] productArray = new String[]{"tomato", "cucumber"};
         eCommercePage.addProductToCart(productPurchased);
+        eCommercePage.addProductToCart(productArray);
     }
 }
