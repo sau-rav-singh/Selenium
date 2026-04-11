@@ -39,7 +39,7 @@ This document describes the architectural design and code flow of the Selenium a
 - **Role**: Implements `WebDriverListener` for "Invisible Logging."
 - **Functionality**: Automatically intercepts clicks and inputs to highlight elements and log screenshots to the report.
 
-## Refactored Code Flow
+## Code Flow
 
 ### 1. Suite Startup
 - `ExtentReportListener.onStart()` runs. The `ExtentReports` engine is ready.
