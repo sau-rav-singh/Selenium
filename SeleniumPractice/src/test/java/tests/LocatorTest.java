@@ -22,7 +22,7 @@ public class LocatorTest extends TestBase {
         commonActions().sendText(By.cssSelector("input[placeholder='Email']"), "john@rsa.com");
         commonActions().click(By.xpath("//input[@type='text'][2]")); // Focus
         getDriver().findElement(By.xpath("//input[@type='text'][2]")).clear();
-        commonActions().sendText(By.cssSelector("input[type='text']:nth-child(3)"), "john@gmail.com");
+        commonActions().sendText(By.cssSelector("input[type='text']:nth-of-type(2)"), "john@gmail.com");
         commonActions().sendText(By.xpath("//form/input[3]"), "9864353253");
         commonActions().click(By.cssSelector(".reset-pwd-btn"));
         
