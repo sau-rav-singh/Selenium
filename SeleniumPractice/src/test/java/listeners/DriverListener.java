@@ -20,7 +20,6 @@ public class DriverListener implements WebDriverListener {
     private void setHighlight(WebElement element) {
         try {
             ((JavascriptExecutor) driver).executeScript("arguments[0].setAttribute('style', 'background: yellow; border: 2px solid red;');", element);
-            Thread.sleep(50); // Small sleep to ensure rendering
         } catch (Exception e) {
             // Ignore highlighting errors
         }

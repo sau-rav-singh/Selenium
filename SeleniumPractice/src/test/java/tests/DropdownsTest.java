@@ -54,11 +54,6 @@ public class DropdownsTest extends TestBase {
         commonActions().click(By.id("ctl00_mainContent_rbtnl_Trip_1"));
         commonActions().click(By.id("Div1"));
         commonActions().click(By.cssSelector("a.ui-state-active"));
-        try {
-            Thread.sleep(5000);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
     }
 
     @Test

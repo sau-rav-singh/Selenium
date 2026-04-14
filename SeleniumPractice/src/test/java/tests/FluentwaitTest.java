@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-public class FluentWaitExample extends TestBase {
+public class FluentwaitTest extends TestBase {
 
     @Test
     public void fluentWaitTest() {
@@ -30,19 +30,15 @@ public class FluentWaitExample extends TestBase {
     }
 
     @Test
-    public void closeQuitTest() throws InterruptedException {
+    public void closeQuitTest() {
         commonActions().goTo("https://bing.com");
-        int millis = 1000;
-        Thread.sleep(millis);
         ((JavascriptExecutor) getDriver()).executeScript("window.open('https://google.com')");
         Set<String> windowHandles = getDriver().getWindowHandles();
         List<String> windowHandlesList = new ArrayList<>(windowHandles);
         getDriver().switchTo().window(windowHandlesList.get(1));
         System.out.println("Page Title of get1 is " + getDriver().getTitle());
-        Thread.sleep(millis);
         getDriver().close();
         getDriver().switchTo().window(windowHandlesList.getFirst());
         System.out.println("Page Title of get0 is " + getDriver().getTitle());
-        Thread.sleep(millis);
     }
 }

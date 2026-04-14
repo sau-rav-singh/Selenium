@@ -6,7 +6,7 @@
             <class name="tests.LocatorTest"/>
             <class name="tests.DropdownsTest"/>
             <class name="tests.AlertTest"/>
-            <class name="tests.FluentWaitExample"/>
+            <class name="tests.FluentwaitTest"/>
             <class name="tests.ActionsTest"/>
             <class name="tests.ECommerceTest"/>
         </classes>

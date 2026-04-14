@@ -100,14 +100,6 @@ public class CommonActions {
         return wait.until(ExpectedConditions.presenceOfElementLocated(locator));
     }
 
-    public void staticWait(int seconds) {
-        try {
-            Thread.sleep(seconds * 1000L);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
     private WebElement waitForClickable(By locator) {
         return wait.ignoring(StaleElementReferenceException.class)
                 .until(ExpectedConditions.elementToBeClickable(locator));
