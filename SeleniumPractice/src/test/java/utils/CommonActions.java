@@ -38,6 +38,16 @@ public class CommonActions {
         driver.get(url);
     }
 
+    public void switchToFrame(By locator) {
+        logger.info("Switching to frame: {}", locator);
+        wait.until(ExpectedConditions.frameToBeAvailableAndSwitchToIt(locator));
+    }
+
+    public void switchToDefaultContent() {
+        logger.info("Switching back to default content");
+        driver.switchTo().defaultContent();
+    }
+
     public void sendText(By locator, String text) {
         logger.info("Sending text '{}' to locator {}", text, locator);
         WebElement element = waitForClickable(locator);
@@ -55,17 +65,12 @@ public class CommonActions {
         element.click();
     }
 
-    public void doubleClick(By locator) {
-        logger.info("Double-clicking on locator {}", locator);
-        getActions().doubleClick(waitForVisibility(locator)).perform();
-    }
-
     public void dragAndDrop(By source, By target) {
         logger.info("Dragging from {} to {}", source, target);
         getActions().dragAndDrop(waitForVisibility(source), waitForVisibility(target)).perform();
     }
 
-    public void moveToElement(By locator){
+    public void moveToElement(By locator) {
         logger.info("Moving to element {}", locator);
         getActions().moveToElement(waitForVisibility(locator)).perform();
     }

@@ -23,11 +23,6 @@ public class TestBase {
         DriverManager.setDriver(browser, test);
 
         getDriver().manage().window().maximize();
-
-        String baseUrl = ConfigReader.getBaseUrl();
-        if (baseUrl != null && !baseUrl.isEmpty()) {
-            getDriver().get(baseUrl);
-        }
     }
 
     public WebDriver getDriver() {

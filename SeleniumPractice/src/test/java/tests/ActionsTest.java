@@ -31,5 +31,6 @@ public class ActionsTest extends TestBase {
                 "HELLO world",
                 "Verify text formatting in search bar"
         );
+
     }
 }
