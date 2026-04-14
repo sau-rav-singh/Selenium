@@ -31,12 +31,10 @@ public class DropdownsTest extends TestBase {
         commonActions().click(By.id("divpaxinfo"));
         commonActions().click(By.id("hrefIncAdt"));
 
-        String adultCount = commonActions().getText(By.xpath("//span[@id='spanAudlt']"));
-        commonActions().assertEquals(adultCount, "2", "Verify adult passenger count");
+        commonActions().assertEquals(commonActions().getText(By.xpath("//span[@id='spanAudlt']")), "2", "Verify adult passenger count");
 
         commonActions().click(By.id("hrefIncChd"));
-        String childCount = commonActions().getText(By.xpath("//span[@id='spanChild']"));
-        commonActions().assertEquals(childCount, "1", "Verify child passenger count");
+        commonActions().assertEquals(commonActions().getText(By.xpath("//span[@id='spanChild']")), "1", "Verify child passenger count");
 
         commonActions().click(By.id("btnclosepaxoption"));
 
@@ -49,7 +47,7 @@ public class DropdownsTest extends TestBase {
         commonActions().goTo("https://rahulshettyacademy.com/dropdownsPractise/");
         commonActions().click(By.id("ctl00_mainContent_ddl_originStation1_CTXT"));
         commonActions().click(By.xpath("//a[@value='DEL']"));
-        commonActions().click(By.xpath("//div[@id='glsctl00_mainContent_ddl_destinationStation1_CTNR'] //a[@value='MAA']"));//"(//a[@value='MAA'])[2]"
+        commonActions().click(By.xpath("//div[@id='glsctl00_mainContent_ddl_destinationStation1_CTNR'] //a[@value='MAA']"));
         commonActions().click(By.cssSelector("a.ui-state-active"));
         commonActions().click(By.id("ctl00_mainContent_rbtnl_Trip_1"));
         commonActions().click(By.id("Div1"));
@@ -60,20 +58,27 @@ public class DropdownsTest extends TestBase {
     public void selectCountryTest() {
         commonActions().goTo("https://rahulshettyacademy.com/dropdownsPractise/");
         commonActions().sendText(By.id("autosuggest"), "ind");
+        
+        // Directly find the specific element or stream it for better readability
         List<WebElement> options = commonActions().findElements(By.cssSelector("li[class='ui-menu-item'] a"));
-        for (WebElement option : options) {
-            if (option.getText().equalsIgnoreCase("India")) {
-                commonActions().click(option);
-                break;
-            }
-        }
+        WebElement country = options.stream()
+                .filter(option -> option.getText().equalsIgnoreCase("India"))
+                .findFirst()
+                .orElseThrow(() -> new RuntimeException("Country 'India' not found in autosuggest"));
+        
+        commonActions().click(country);
     }
 
     @Test
     public void passengerTypeTest() {
         commonActions().goTo("https://rahulshettyacademy.com/dropdownsPractise/");
-        commonActions().click(By.cssSelector("input[id*='SeniorCitizen'][type='checkbox']"));
-        commonActions().assertEquals(commonActions().findElement(By.cssSelector("input[id*='SeniorCitizen'][type='checkbox']")).isSelected(), true, "Verify Senior Citizen checkbox isSelected");
-
+        By seniorCitizenCheckbox = By.cssSelector("input[id*='SeniorCitizen'][type='checkbox']");
+        
+        commonActions().click(seniorCitizenCheckbox);
+        commonActions().assertEquals(
+                commonActions().findElement(seniorCitizenCheckbox).isSelected(), 
+                true, 
+                "Verify Senior Citizen checkbox isSelected"
+        );
     }
 }

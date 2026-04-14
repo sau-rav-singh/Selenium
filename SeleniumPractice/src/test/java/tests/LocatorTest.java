@@ -14,19 +14,18 @@ public class LocatorTest extends TestBase {
         commonActions().sendText(By.name("inputPassword"), "hello123");
         commonActions().click(By.className("signInBtn"));
 
-        System.out.println(commonActions().getText(By.cssSelector("p.error")));
+        commonActions().getText(By.cssSelector("p.error"));
 
         commonActions().click(By.linkText("Forgot your password?"));
 
         commonActions().sendText(By.xpath("//input[@placeholder='Name']"), "John");
         commonActions().sendText(By.cssSelector("input[placeholder='Email']"), "john@rsa.com");
-        commonActions().click(By.xpath("//input[@type='text'][2]")); // Focus
-        getDriver().findElement(By.xpath("//input[@type='text'][2]")).clear();
+        
         commonActions().sendText(By.cssSelector("input[type='text']:nth-of-type(2)"), "john@gmail.com");
         commonActions().sendText(By.xpath("//form/input[3]"), "9864353253");
         commonActions().click(By.cssSelector(".reset-pwd-btn"));
 
-        System.out.println(commonActions().getText(By.cssSelector("form p")));
+        commonActions().getText(By.cssSelector("form p"));
 
         commonActions().click(By.xpath("//div[@class='forgot-pwd-btn-conainer']/button[1]"));
 
@@ -40,9 +39,9 @@ public class LocatorTest extends TestBase {
     @Test
     public void locatorExamples2() {
         String name = "rahul";
-        String password = getPassword();
-
         commonActions().goTo("https://rahulshettyacademy.com/locatorspractice/");
+        String password = getPasswordFromUI();
+
         commonActions().sendText(By.id("inputUsername"), name);
         commonActions().sendText(By.name("inputPassword"), password);
         commonActions().click(By.className("signInBtn"));
@@ -54,21 +53,26 @@ public class LocatorTest extends TestBase {
         commonActions().click(By.xpath("//*[text()='Log Out']"));
     }
 
-    private String getPassword() {
-        commonActions().goTo("https://rahulshettyacademy.com/locatorspractice/");
+    /**
+     * Helper to extract password without reloading the page if already present
+     */
+    private String getPasswordFromUI() {
         commonActions().click(By.linkText("Forgot your password?"));
-
         commonActions().click(By.cssSelector(".reset-pwd-btn"));
         String passwordText = commonActions().getText(By.cssSelector("form p"));
 
         String[] passwordArray = passwordText.split("'");
-        return passwordArray[1];
+        String password = passwordArray[1];
+        
+        // Go back to login
+        commonActions().click(By.className("go-to-login-btn"));
+        return password;
     }
 
     @Test
     public void locatorExamples3() {
         commonActions().goTo("https://rahulshettyacademy.com/AutomationPractice/");
-        System.out.println(commonActions().getText(By.xpath("//header/div/button[1]/following-sibling::button[1]")));
-        System.out.println(commonActions().getText(By.xpath("//header/div/button[1]/parent::div/button[2]")));
+        commonActions().getText(By.xpath("//header/div/button[1]/following-sibling::button[1]"));
+        commonActions().getText(By.xpath("//header/div/button[1]/parent::div/button[2]"));
     }
 }
