@@ -1,6 +1,7 @@
 package utils;
 
 import org.openqa.selenium.*;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -14,10 +15,22 @@ public class CommonActions {
     private static final Logger logger = LoggerFactory.getLogger(CommonActions.class);
     private final WebDriver driver;
     private final WebDriverWait wait;
+    private Actions actions;
 
     public CommonActions(WebDriver driver, WebDriverWait wait) {
         this.driver = driver;
         this.wait = wait;
+    }
+
+    private Actions getActions() {
+        if (actions == null) {
+            actions = new Actions(driver);
+        }
+        return actions;
+    }
+
+    public Actions getActionsInstance() {
+        return getActions();
     }
 
     public void goTo(String url) {
@@ -40,6 +53,21 @@ public class CommonActions {
     public void click(WebElement element) {
         logger.info("Clicking on web element");
         element.click();
+    }
+
+    public void doubleClick(By locator) {
+        logger.info("Double-clicking on locator {}", locator);
+        getActions().doubleClick(waitForVisibility(locator)).perform();
+    }
+
+    public void dragAndDrop(By source, By target) {
+        logger.info("Dragging from {} to {}", source, target);
+        getActions().dragAndDrop(waitForVisibility(source), waitForVisibility(target)).perform();
+    }
+
+    public void moveToElement(By locator){
+        logger.info("Moving to element {}", locator);
+        getActions().moveToElement(waitForVisibility(locator)).perform();
     }
 
     public String getAlertText() {
@@ -105,12 +133,12 @@ public class CommonActions {
                 .until(ExpectedConditions.elementToBeClickable(locator));
     }
 
-    private WebElement waitForVisibility(By locator) {
+    public WebElement waitForVisibility(By locator) {
         return wait.ignoring(StaleElementReferenceException.class)
                 .until(ExpectedConditions.visibilityOfElementLocated(locator));
     }
 
-    private WebElement waitForVisibility(WebElement webElement) {
+    public WebElement waitForVisibility(WebElement webElement) {
         return wait.ignoring(StaleElementReferenceException.class)
                 .until(ExpectedConditions.visibilityOf(webElement));
     }
