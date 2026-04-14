@@ -41,7 +41,7 @@ public class DropdownsTest extends TestBase {
         commonActions().click(By.id("btnclosepaxoption"));
 
         String passengerInfo = commonActions().getText(By.id("divpaxinfo"));
-        commonActions().assertEquals(passengerInfo, "2 Adult, 1 Child", "Verify passenger summary info");
+        commonActions().assertEquals(passengerInfo, "2 adult, 1 child", "Verify passenger summary info");
     }
 
     @Test(enabled = false)
