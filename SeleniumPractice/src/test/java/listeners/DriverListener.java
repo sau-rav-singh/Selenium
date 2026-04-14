@@ -67,4 +67,9 @@ public class DriverListener implements WebDriverListener {
     public void afterGetText(WebElement element, String result) {
         logWithScreenshot(Status.INFO, "Retrieved text '" + result + "' from element");
     }
+
+    @Override
+    public void afterGet(WebDriver driver, String url){
+        logWithScreenshot(Status.PASS, "Navigated to URL: " + url);
+    }
 }

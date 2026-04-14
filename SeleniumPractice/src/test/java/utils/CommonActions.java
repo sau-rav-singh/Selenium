@@ -20,6 +20,11 @@ public class CommonActions {
         this.wait = wait;
     }
 
+    public void goTo(String url) {
+        logger.info("Navigating to URL: {}", url);
+        driver.get(url);
+    }
+
     public void sendText(By locator, String text) {
         logger.info("Sending text '{}' to locator {}", text, locator);
         WebElement element = waitForClickable(locator);

@@ -11,7 +11,7 @@ public class DropdownsTest extends TestBase {
 
     @Test
     public void selectTest() {
-        getDriver().get("https://rahulshettyacademy.com/dropdownsPractise/");
+        commonActions().goTo("https://rahulshettyacademy.com/dropdownsPractise/");
         By currencyDropdown = By.id("ctl00_mainContent_DropDownListCurrency");
 
         commonActions().selectByIndex(currencyDropdown, 2);
@@ -26,7 +26,7 @@ public class DropdownsTest extends TestBase {
 
     @Test
     public void passengerQtyTest() {
-        getDriver().get("https://rahulshettyacademy.com/dropdownsPractise/");
+        commonActions().goTo("https://rahulshettyacademy.com/dropdownsPractise/");
 
         commonActions().click(By.id("divpaxinfo"));
         commonActions().click(By.id("hrefIncAdt"));
@@ -46,7 +46,7 @@ public class DropdownsTest extends TestBase {
 
     @Test(enabled = false)
     public void itineraryTest() {
-        getDriver().get("https://rahulshettyacademy.com/dropdownsPractise/");
+        commonActions().goTo("https://rahulshettyacademy.com/dropdownsPractise/");
         commonActions().click(By.id("ctl00_mainContent_ddl_originStation1_CTXT"));
         commonActions().click(By.xpath("//a[@value='DEL']"));
         commonActions().click(By.xpath("//div[@id='glsctl00_mainContent_ddl_destinationStation1_CTNR'] //a[@value='MAA']"));//"(//a[@value='MAA'])[2]"
@@ -63,7 +63,7 @@ public class DropdownsTest extends TestBase {
 
     @Test
     public void selectCountryTest() {
-        getDriver().get("https://rahulshettyacademy.com/dropdownsPractise/");
+        commonActions().goTo("https://rahulshettyacademy.com/dropdownsPractise/");
         commonActions().sendText(By.id("autosuggest"), "ind");
         List<WebElement> options = commonActions().findElements(By.cssSelector("li[class='ui-menu-item'] a"));
         for (WebElement option : options) {
@@ -76,7 +76,7 @@ public class DropdownsTest extends TestBase {
 
     @Test
     public void passengerTypeTest() {
-        getDriver().get("https://rahulshettyacademy.com/dropdownsPractise/");
+        commonActions().goTo("https://rahulshettyacademy.com/dropdownsPractise/");
         commonActions().click(By.cssSelector("input[id*='SeniorCitizen'][type='checkbox']"));
         commonActions().assertEquals(commonActions().findElement(By.cssSelector("input[id*='SeniorCitizen'][type='checkbox']")).isSelected(), true, "Verify Senior Citizen checkbox isSelected");
 

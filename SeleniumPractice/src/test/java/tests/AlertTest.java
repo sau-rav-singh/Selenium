@@ -9,7 +9,7 @@ public class AlertTest extends TestBase {
 
     @Test
     public void triggerAlertTest() {
-        getDriver().get("https://rahulshettyacademy.com/AutomationPractice/");
+        commonActions().goTo("https://rahulshettyacademy.com/AutomationPractice/");
         String text = "saurav";
         commonActions().sendText(By.id("name"), text);
         getUnDecoratedDriver().findElement(By.id("alertbtn")).click();
