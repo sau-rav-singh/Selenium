@@ -38,6 +38,16 @@ public class CommonActions {
         driver.get(url);
     }
 
+    public void scrollToElement(By locator) {
+        logger.info("Scrolling to element: {}", locator);
+        WebElement element = waitForVisibility(locator);
+        scrollToElement(element);
+    }
+
+    public void scrollToElement(WebElement element) {
+        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", element);
+    }
+
     public void switchToFrame(By locator) {
         logger.info("Switching to frame: {}", locator);
         wait.until(ExpectedConditions.frameToBeAvailableAndSwitchToIt(locator));
