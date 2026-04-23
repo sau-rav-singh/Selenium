@@ -40,21 +40,28 @@ public class ECommerceTest extends TestBase {
     public void getPriceTest() {
         commonActions().goTo("https://rahulshettyacademy.com/seleniumPractise/#/offers");
         commonActions().selectByValue(By.id("page-menu"), "5");
-        String productName = "Wheat";
-        Optional<WebElement> productRow;
-        do {
-            productRow = commonActions().findElements(By.xpath("//tbody/tr/td[1]")).stream().filter(nameElement -> nameElement.getText().equalsIgnoreCase(productName)).findFirst();
-        }
-        while (!productRow.isPresent()) {
-            commonActions().click(By.xpath("//a[@aria-label='Next']"));
-            productRow = commonActions().findElements(By.xpath("//tbody/tr/td[1]")).stream().filter(nameElement -> nameElement.getText().equalsIgnoreCase(productName)).findFirst();
-        }
-        commonActions().assertEquals(productRow.isPresent(), true, "Verify product '" + productName + "' is present on the page.");
+        String productName = "Cherry";
+        String price = "";
+        boolean hasNext;
 
-        String price;
-        if (productRow.isPresent()) {
-            price = productRow.get().findElement(By.xpath("./following-sibling::td[1]")).getText();
-            commonActions().assertEquals(!price.isEmpty(), true, "Verify price for '" + productName + "' is not empty.");
+        do {
+            Optional<WebElement> productRow = commonActions().findElements(By.xpath("//tbody/tr/td[1]")).stream().filter(nameElement -> nameElement.getText().equalsIgnoreCase(productName)).findFirst();
+
+            if (productRow.isPresent()) {
+                price = productRow.get().findElement(By.xpath("./following-sibling::td[1]")).getText();
+                hasNext = false;
+            } else {
+                WebElement nextButton = commonActions().findElement(By.xpath("//a[@aria-label='Next']"));
+                hasNext = !"true".equals(nextButton.getAttribute("aria-disabled"));
+
+                if (hasNext) {
+                    commonActions().click(nextButton);
+                }
+            }
+        } while (hasNext);
+
+        commonActions().assertEquals(!price.isEmpty(), true, "Verify product '" + productName + "' was found and price retrieved.");
+        if (!price.isEmpty()) {
             System.out.println("Price of " + productName + ": " + price);
         }
     }
