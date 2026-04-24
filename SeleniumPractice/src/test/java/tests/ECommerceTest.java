@@ -58,4 +58,14 @@ public class ECommerceTest extends TestBase {
         System.out.println("Price of " + productName + ": " + price);
         commonActions().assertEquals(price, "93", "Price if Cherry should be 93");
     }
+
+    @Test
+    public void filterTest(){
+        commonActions().goTo("https://rahulshettyacademy.com/seleniumPractise/#/offers");
+        String searchText = "ch";
+        commonActions().sendText(By.id("search-field"), searchText);
+        List<WebElement> products=commonActions().findElements(By.xpath("//tbody/tr/td[1]"));
+        List<WebElement> productsNameList=products.stream().filter(product->product.getText().toLowerCase().startsWith(searchText)).toList();
+        commonActions().assertEquals(products.size(),productsNameList.size(),"products and productsNameList should have same elements");
+    }
 }
