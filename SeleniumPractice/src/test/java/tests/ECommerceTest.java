@@ -42,27 +42,20 @@ public class ECommerceTest extends TestBase {
         commonActions().selectByValue(By.id("page-menu"), "5");
         String productName = "Cherry";
         String price = "";
-        boolean hasNext;
+        boolean productFound = false;
+        List<WebElement> products;
 
-        do {
-            Optional<WebElement> productRow = commonActions().findElements(By.xpath("//tbody/tr/td[1]")).stream().filter(nameElement -> nameElement.getText().equalsIgnoreCase(productName)).findFirst();
-
-            if (productRow.isPresent()) {
-                price = productRow.get().findElement(By.xpath("./following-sibling::td[1]")).getText();
-                hasNext = false;
+        while (!productFound) {
+            products = commonActions().findElements(By.xpath("//tbody/tr/td[1]"));
+            Optional<String> extractedPrice = products.stream().filter(product -> product.getText().equalsIgnoreCase(productName)).findFirst().map(product -> product.findElement(By.xpath("./following-sibling::td[1]")).getText());
+            if (extractedPrice.isEmpty()) {
+                commonActions().click(By.xpath("//a[@aria-label='Next']"));
             } else {
-                WebElement nextButton = commonActions().findElement(By.xpath("//a[@aria-label='Next']"));
-                hasNext = !"true".equals(nextButton.getAttribute("aria-disabled"));
-
-                if (hasNext) {
-                    commonActions().click(nextButton);
-                }
+                price = extractedPrice.get();
+                productFound = true;
             }
-        } while (hasNext);
-
-        commonActions().assertEquals(!price.isEmpty(), true, "Verify product '" + productName + "' was found and price retrieved.");
-        if (!price.isEmpty()) {
-            System.out.println("Price of " + productName + ": " + price);
         }
+        System.out.println("Price of " + productName + ": " + price);
+        commonActions().assertEquals(price, "93", "Price if Cherry should be 93");
     }
 }
