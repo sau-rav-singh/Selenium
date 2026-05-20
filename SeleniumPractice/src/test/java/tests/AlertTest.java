@@ -16,4 +16,16 @@ public class AlertTest extends TestBase {
         commonActions().assertEquals(alertText.contains(text), true, "Verify alert contains name: " + text);
         commonActions().acceptAlert();
     }
+
+    public static void main(String[] args) {
+        String json = """
+                {
+                    "user": "Gemini",
+                    "role": "AI Assistant",
+                    "status": "Online"
+                }
+                """;
+
+        System.out.println(json);
+    }
 }
