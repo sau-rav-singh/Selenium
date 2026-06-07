@@ -157,4 +157,9 @@ public class CommonActions {
         return wait.ignoring(StaleElementReferenceException.class)
                 .until(ExpectedConditions.visibilityOf(webElement));
     }
+
+    public void waitForInVisibility(By locator) {
+        wait.ignoring(StaleElementReferenceException.class)
+                .until(ExpectedConditions.invisibilityOfElementLocated(locator));
+    }
 }
