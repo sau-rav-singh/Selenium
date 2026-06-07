@@ -10,14 +10,14 @@ import utils.CommonActions;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class CartPage {
+public class CartPage extends BaseClientPage {
     private static final Logger logger = LoggerFactory.getLogger(CartPage.class);
-    private final CommonActions commonActions;
 
     private final By productNamesLocator = By.cssSelector("div.cartSection h3");
+    private final By checkoutButton = By.cssSelector(".totalRow button");
 
     public CartPage(CommonActions commonActions) {
-        this.commonActions = commonActions;
+        super(commonActions);
     }
 
     public List<String> getProductsInCart() {
@@ -52,6 +52,10 @@ public class CartPage {
         Assert.assertEquals(products.size(), expectedCount,
                 "Product count mismatch. Expected: " + expectedCount + ", Actual: " + products.size());
         logger.info("✓ Cart contains {} product(s) as expected", expectedCount);
+    }
+
+    public void clickCheckoutButton(){
+        commonActions.click(checkoutButton);
     }
 }
 
