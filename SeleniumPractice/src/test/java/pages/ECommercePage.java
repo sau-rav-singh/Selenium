@@ -6,12 +6,15 @@ import utils.CommonActions;
 
 import java.util.Arrays;
 import java.util.List;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class ECommercePage {
+    private static final Logger logger = LoggerFactory.getLogger(ECommercePage.class);
     private final CommonActions commonActions;
 
     private final By productNameLocator = By.xpath("//h4[@class='product-name']");
-    private final By addToCartButtonLocator = By.xpath("./parent::div //button");
+    private final By addToCartButtonLocator = By.xpath("./parent::div//button");
 
     public ECommercePage(CommonActions commonActions) {
         this.commonActions = commonActions;
@@ -25,6 +28,7 @@ public class ECommercePage {
                 product.findElement(addToCartButtonLocator).click();
                 commonActions.waitForVisibility(By.cssSelector("#toast-container"));
                 commonActions.waitForInVisibility(By.cssSelector(".ng-animating"));
+                logger.info("Added product to cart: {}", productName);
                 break;
             }
         }
@@ -32,17 +36,17 @@ public class ECommercePage {
 
     public void addProductToCart(String[] productArray) {
         List<WebElement> allProductsName = commonActions.findElements(productNameLocator);
-        System.out.println("productArray is" + Arrays.toString(productArray));
+        logger.debug("productArray is {}", Arrays.toString(productArray));
         for (WebElement product : allProductsName) {
             String productName = commonActions.getText(product).split(" ")[0];
-            System.out.println("productName is " + productName);
+            logger.debug("productName is {}", productName);
             if (Arrays.asList(productArray).contains(productName)) {
-                System.out.println("In if loop for " + productName);
+                logger.debug("In if loop for {}", productName);
                 product.findElement(addToCartButtonLocator).click();
                 commonActions.waitForVisibility(By.cssSelector("#toast-container"));
                 commonActions.waitForInVisibility(By.cssSelector(".ng-animating"));
             }else{
-                System.out.println(productName+" not in the expected product list");
+                logger.trace("{} not in the expected product list", productName);
             }
         }
     }
