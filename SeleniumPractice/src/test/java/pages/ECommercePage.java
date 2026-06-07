@@ -23,6 +23,8 @@ public class ECommercePage {
         for (WebElement product : allProductsName) {
             if (commonActions.getText(product).contains(productToSearch)) {
                 product.findElement(addToCartButtonLocator).click();
+                commonActions.waitForVisibility(By.cssSelector("#toast-container"));
+                commonActions.waitForInVisibility(By.cssSelector(".ng-animating"));
                 break;
             }
         }
@@ -37,6 +39,8 @@ public class ECommercePage {
             if (Arrays.asList(productArray).contains(productName)) {
                 System.out.println("In if loop for " + productName);
                 product.findElement(addToCartButtonLocator).click();
+                commonActions.waitForVisibility(By.cssSelector("#toast-container"));
+                commonActions.waitForInVisibility(By.cssSelector(".ng-animating"));
             }else{
                 System.out.println(productName+" not in the expected product list");
             }

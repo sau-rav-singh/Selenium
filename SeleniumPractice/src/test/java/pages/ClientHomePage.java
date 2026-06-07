@@ -1,15 +1,20 @@
-package utils;
+package pages;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+import utils.CommonActions;
 
 import java.util.List;
 import java.util.Optional;
 
-public class CommonUtils {
-    static CommonActions commonActions=DriverManager.getCommonActions();
+public class ClientHomePage {
+    private final CommonActions commonActions;
 
-    public static void addProductToCart(String productName) {
+    public ClientHomePage(CommonActions commonActions) {
+        this.commonActions = commonActions;
+    }
+
+    public void addProductToCart(String productName) {
         List<WebElement> products = commonActions.findElements(By.xpath("//section[@id='products']/div/div[2]/div"));
         Optional<WebElement> product = products.stream()
                 .filter(ele -> ele.findElement(By.xpath(".//b")).getText().equalsIgnoreCase(productName))
