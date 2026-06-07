@@ -1,6 +1,7 @@
 package pages;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -9,15 +10,13 @@ import utils.CommonActions;
 import java.util.List;
 import java.util.Optional;
 
-public class ClientHomePage extends BaseClientPage{
+public class ClientHomePage extends BaseClientPage {
     private static final Logger logger = LoggerFactory.getLogger(ClientHomePage.class);
     public static final String SECTION_ID_PRODUCTS_DIV_DIV_2_DIV = "//section[@id='products']/div/div[2]/div";
     public static final String ADD_TO_CART = ".//parent::div/button[2]";
-    private final CommonActions commonActions;
 
     public ClientHomePage(CommonActions commonActions) {
         super(commonActions);
-        this.commonActions = commonActions;
     }
 
     public void addProductToCart(String productName) {

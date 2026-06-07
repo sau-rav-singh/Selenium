@@ -6,6 +6,7 @@ import pages.CartPage;
 import pages.CheckoutPage;
 import pages.ClientHomePage;
 import pages.LoginPage;
+import utils.CommonActions;
 import utils.DriverManager;
 import utils.TestBase;
 
@@ -13,16 +14,15 @@ public class ClientE2ETest extends TestBase {
     public static final String IPHONE_13_PRO = "IPHONE 13 PRO";
     public static final String ADIDAS_ORIGINAL = "ADIDAS ORIGINAL";
     private ClientHomePage clientHomePage;
-    private CartPage cartPage;
     private CheckoutPage checkoutPage;
 
     @BeforeMethod
     public void setUpPage() {
-        commonActions().goTo("https://rahulshettyacademy.com/client");
-        LoginPage loginPage = new LoginPage(DriverManager.getCommonActions());
-        clientHomePage = new ClientHomePage(DriverManager.getCommonActions());
-        cartPage = new CartPage(DriverManager.getCommonActions());
-        checkoutPage = new CheckoutPage(DriverManager.getCommonActions());
+        CommonActions actions = DriverManager.getCommonActions();
+        actions.goTo("https://rahulshettyacademy.com/client");
+        LoginPage loginPage = new LoginPage(actions);
+        clientHomePage = new ClientHomePage(actions);
+        checkoutPage = new CheckoutPage(actions);
         loginPage.loginWithDefaultCredentials();
     }
 
@@ -33,7 +33,7 @@ public class ClientE2ETest extends TestBase {
         clientHomePage.addProductToCart(ADIDAS_ORIGINAL);
 
         // Navigate to cart and verify products
-        clientHomePage.mainMenuSection().goToCart();
+        CartPage cartPage = clientHomePage.mainMenuSection().goToCart();
         cartPage.verifyProductsInCart(IPHONE_13_PRO, ADIDAS_ORIGINAL);
         cartPage.verifyProductCount(2);
 

@@ -27,8 +27,9 @@ public class MainMenuSection {
         commonActions.click(ordersLink);
     }
 
-    public void goToCart() {
+    public CartPage goToCart() {
         logger.info("Navigating to cart");
         commonActions.click(cartLink);
+        return new CartPage(commonActions);
     }
 }
