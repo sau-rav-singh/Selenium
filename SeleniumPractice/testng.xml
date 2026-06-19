@@ -3,12 +3,12 @@
 <suite name="Parallel Suite" parallel="classes" thread-count="2">
     <test name="Selenium Practice Tests">
         <classes>
-            <class name="tests.LocatorTest"/>
-            <class name="tests.DropdownsTest"/>
-            <class name="tests.AlertTest"/>
-            <class name="tests.FluentwaitTest"/>
-            <class name="tests.ActionsTest"/>
-            <class name="tests.ECommerceTest"/>
+            <class name="tests.singleTests.LocatorTest"/>
+            <class name="tests.singleTests.DropdownsTest"/>
+            <class name="tests.singleTests.AlertTest"/>
+            <class name="tests.singleTests.FluentwaitTest"/>
+            <class name="tests.singleTests.ActionsTest"/>
+            <class name="tests.singleTests.ECommerceTest"/>
         </classes>
     </test>
 </suite>

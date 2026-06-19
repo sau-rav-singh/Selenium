@@ -10,7 +10,7 @@ import utils.CommonActions;
 import utils.DriverManager;
 import utils.TestBase;
 
-public class ClientE2ETest extends TestBase {
+public class FrameworkE2ETest extends TestBase {
     public static final String IPHONE_13_PRO = "IPHONE 13 PRO";
     public static final String ADIDAS_ORIGINAL = "ADIDAS ORIGINAL";
     private ClientHomePage clientHomePage;

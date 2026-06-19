@@ -1,4 +1,4 @@
-package tests;
+package tests.singleTests;
 
 import utils.TestBase;
 import org.openqa.selenium.By;
