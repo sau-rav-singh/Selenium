@@ -1,8 +1,10 @@
 package stepdefinitions;
 
+import com.aventstack.extentreports.Status;
 import context.TestContext;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.When;
+import manager.ExtentTestManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -19,6 +21,7 @@ public class CommonSteps {
     public void userInOnParaBankHomePage() {
         logger.info("Executing step: User is on ParaBank HomePage");
         testContext.navigateToHomePage();
+        ExtentTestManager.getTest().log(Status.INFO, "User is on ParaBank HomePage");
     }
 
     @When("^User logs into Parabank with username (.*) and password (.*)$")
