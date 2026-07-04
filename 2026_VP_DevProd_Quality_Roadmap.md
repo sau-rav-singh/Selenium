@@ -3,33 +3,14 @@
 
 ---
 
-## 0. Why the Old Roadmap Doesn't Fit Anymore
-
-Your 3-year roadmap (Alex Xu, AWS SAA, JMeter, Blind 150) was built for a **Staff SDET / Test Automation Architect** JD. The new JD you're seeing is a **VP Developer Productivity / Quality Engineering** role. Three real differences:
-
-| Old target | New target |
-|---|---|
-| Best test automation engineer in the room | Platform engineer who happens to own quality |
-| Frameworks, frameworks, frameworks | Developer tooling, CLI, CI/CD, internal platforms |
-| AWS cert as a credential | K8s and Docker as working infrastructure, no cert needed |
-| Heavy LeetCode grind (Blind 150, Hard-heavy) | Light DSA maintenance, heavy system design and JVM internals |
-| Capital markets as background context | Capital markets fluency is table stakes, not a differentiator |
-| No AI content | AI for QE and Developer Productivity is now a core JD line item |
-
-Keep from the old plan: System Design (Alex Xu Vol 1/2), Manager's Path, Staff Engineer, capital markets refresh, Docker/K8s books. Drop or downgrade: AWS SAA certification (optional, not required for this JD), JMeter (not mentioned, deprioritize), Blind 150 grind (replace with maintenance-level DSA). Add new: JVM/GC internals, concurrency, developer tooling and CLI building, test impact analysis, quality gates, DORA/SPACE metrics, observability stack, AI for QE (LLM/RAG/agents/MCP).
-
-Your resume right now sells "I built and led test automation." The JD wants "I built the platform 500 engineers use to ship faster and safer." Every deliverable below exists to close that specific gap, and every one of them becomes a resume bullet and interview story.
-
----
-
 ## 1. Time Allocation (15-18 hrs/week, 18 months)
 
-| Phase | Months | Focus | Weekly Split |
-|---|---|---|---|
-| Phase 1 | 1-4 | Engineering Foundations (JVM, Concurrency, Patterns) | Core topic 10h / DSA maintenance 3h / System design 2h |
-| Phase 2 | 5-9 | Platform Architecture (Frameworks, API/DB, Docker/K8s, CI/CD) | Core topic 10h / DSA maintenance 2h / System design 3h |
-| Phase 3 | 10-14 | Developer Productivity Engineering (Tooling, Metrics, Observability) | Core topic 10h / System design 3h / Leadership 2h |
-| Phase 4 | 15-18 | AI for QE + VP System Design + Leadership + Domain + Interview Prep | Core topic 6h / System design 4h / Domain 3h / Interview prep 5h |
+| Phase   | Months | Focus                                                                | Weekly Split                                                     |
+|---------|--------|----------------------------------------------------------------------|------------------------------------------------------------------|
+| Phase 1 | 1-4    | Engineering Foundations (JVM, Concurrency, Patterns)                 | Core topic 10h / DSA maintenance 3h / System design 2h           |
+| Phase 2 | 5-9    | Platform Architecture (Frameworks, API/DB, Docker/K8s, CI/CD)        | Core topic 10h / DSA maintenance 2h / System design 3h           |
+| Phase 3 | 10-14  | Developer Productivity Engineering (Tooling, Metrics, Observability) | Core topic 10h / System design 3h / Leadership 2h                |
+| Phase 4 | 15-18  | AI for QE + VP System Design + Leadership + Domain + Interview Prep  | Core topic 6h / System design 4h / Domain 3h / Interview prep 5h |
 
 Continuous, every week, all 18 months, non-negotiable:
 - 3 DSA problems (Medium, pattern-based, not grind-for-grind's-sake)
@@ -222,27 +203,27 @@ Every one of these is a resume bullet and a 10-minute interview story. If you sk
 
 ## 8. Verified Resource List (Consolidated)
 
-| Resource | Type | Phase |
-|---|---|---|
-| Effective Java, 3rd Ed — Joshua Bloch | Book | 1 |
-| Java Concurrency in Practice — Brian Goetz | Book | 1 |
-| Head First Design Patterns, 2nd Ed — Freeman & Robson | Book | 1 |
-| Design Patterns for High-Quality Automated Tests — Anton Angelov | Book | 2 |
-| Guide to Test Automation Architecture (2024) — Craig Risi | Book | 2 |
-| Docker Deep Dive (2025 Ed) — Nigel Poulton | Book | 2 |
-| Kubernetes: Up and Running, 3rd Ed — Burns/Beda/Hightower | Book | 2 |
-| Pipeline as Code — Mohamed Labouardy | Book | 2 |
-| Accelerate — Forsgren/Humble/Kim | Book | 3 |
-| Observability Engineering — Majors/Fong-Jones/Miranda | Book | 3 |
-| AI Engineering — Chip Huyen | Book | 4 |
-| The LLM Engineering Handbook — Iusztin & Labonne | Book | 4 |
-| System Design Interview Vol 1 & 2 — Alex Xu | Book | 1 & 4 |
-| The Manager's Path — Camille Fournier | Book | 4 |
-| Staff Engineer — Will Larson | Book | 4 |
-| The Trade Lifecycle — Robert P. Baker | Book | 4 |
-| SPACE Framework write-ups (Microsoft Research/GitHub, 2021) | Free online | 3 |
-| DORA/DX 2026 State of AI-Assisted Development reports | Free online | 3 |
-| Anthropic MCP documentation | Free online | 4 |
+| Resource                                                         | Type        | Phase |
+|------------------------------------------------------------------|-------------|-------|
+| Effective Java, 3rd Ed — Joshua Bloch                            | Book        | 1     |
+| Java Concurrency in Practice — Brian Goetz                       | Book        | 1     |
+| Head First Design Patterns, 2nd Ed — Freeman & Robson            | Book        | 1     |
+| Design Patterns for High-Quality Automated Tests — Anton Angelov | Book        | 2     |
+| Guide to Test Automation Architecture (2024) — Craig Risi        | Book        | 2     |
+| Docker Deep Dive (2025 Ed) — Nigel Poulton                       | Book        | 2     |
+| Kubernetes: Up and Running, 3rd Ed — Burns/Beda/Hightower        | Book        | 2     |
+| Pipeline as Code — Mohamed Labouardy                             | Book        | 2     |
+| Accelerate — Forsgren/Humble/Kim                                 | Book        | 3     |
+| Observability Engineering — Majors/Fong-Jones/Miranda            | Book        | 3     |
+| AI Engineering — Chip Huyen                                      | Book        | 4     |
+| The LLM Engineering Handbook — Iusztin & Labonne                 | Book        | 4     |
+| System Design Interview Vol 1 & 2 — Alex Xu                      | Book        | 1 & 4 |
+| The Manager's Path — Camille Fournier                            | Book        | 4     |
+| Staff Engineer — Will Larson                                     | Book        | 4     |
+| The Trade Lifecycle — Robert P. Baker                            | Book        | 4     |
+| SPACE Framework write-ups (Microsoft Research/GitHub, 2021)      | Free online | 3     |
+| DORA/DX 2026 State of AI-Assisted Development reports            | Free online | 3     |
+| Anthropic MCP documentation                                      | Free online | 4     |
 
 **Dropped from your old plan and why:** AWS SAA certification (not in this JD, optional side project at best), JMeter (not mentioned, low ROI for this specific role), Blind 150 full grind (replaced with 3 problems/week maintenance — you need system design and platform depth more than you need Hard-level LeetCode at VP level).
 
