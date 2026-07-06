@@ -4,9 +4,10 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Properties;
 
-public class ConfigReader {
+public final class ConfigReader {
     private static final Properties properties = new Properties();
 
+    // Static block ensures file is loaded exactly once when class is loaded
     static {
         try (FileInputStream fis = new FileInputStream("src/test/resources/config.properties")) {
             properties.load(fis);
@@ -14,6 +15,8 @@ public class ConfigReader {
             System.err.println("Warning: config.properties not found at src/test/resources/config.properties. Using system properties or defaults.");
         }
     }
+
+    private ConfigReader() {} // Prevent instantiation
 
     public static String getProperty(String key, String defaultValue) {
         String value = System.getProperty(key);
