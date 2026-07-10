@@ -1,7 +1,5 @@
 # VP Quality Engineering, India IB GCCs: JD Findings + Roadmap
 
----
-
 ## Roadmap: Basics to Advanced
 
 Rebuilt from scratch per your instruction. Each phase assumes you brush fundamentals even where you have production experience, because interview panels test fundamentals harder than production usage does.
@@ -53,5 +51,3 @@ Rebuilt from scratch per your instruction. Each phase assumes you brush fundamen
 - System design for test platforms: scalability, multi-team framework governance, versioning strategy
 - Since you're targeting IC/hands-on lead, frame leadership answers around technical authority (architecture decisions, PR governance, framework standards) rather than people management
 - Mock interviews built around the VP JD language above: "define strategy," "own sign-off," "architect scalable framework"
-
----
