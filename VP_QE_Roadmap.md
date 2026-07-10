@@ -1,4 +1,4 @@
-# VP Quality Engineering, India IB GCCs: JD Findings + Roadmap
+# VP Quality Engineering
 
 ## Roadmap: Basics to Advanced
 
@@ -38,6 +38,7 @@ Rebuilt from scratch per your instruction. Each phase assumes you brush fundamen
 
 ### Phase 5: Developer Productivity & Platform Engineering (Weeks 25-30)
 - DORA metrics, flow metrics, engineering KPIs, Kafka/streaming test exposure
+- Event driven test exposure
 - Internal developer platforms, self-service tooling concepts
 - Build system optimization, test suite runtime reduction at scale (you already did 15s to 5s, extend into a repeatable methodology you can teach)
 - This is your primary differentiator per your existing roadmap, this phase should be your deepest
