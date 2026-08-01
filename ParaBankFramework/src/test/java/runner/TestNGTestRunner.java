@@ -5,7 +5,7 @@ import io.cucumber.testng.CucumberOptions;
 import org.testng.annotations.DataProvider;
 
 @CucumberOptions(features = "src/test/resources/features", glue = {"stepdefinitions", "hooks"}, monochrome = true,
-        tags = "@Login",
+        tags = "@Register",
         plugin = {"html:target/cucumber.html", "json:target/cucumber.json"})
 
 public class TestNGTestRunner extends AbstractTestNGCucumberTests {

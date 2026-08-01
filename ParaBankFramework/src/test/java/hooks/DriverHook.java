@@ -1,6 +1,7 @@
 package hooks;
 
 import com.aventstack.extentreports.ExtentReports;
+import context.TestContext;
 import driver.DriverManager;
 import io.cucumber.java.After;
 import io.cucumber.java.Before;
@@ -18,6 +19,11 @@ public class DriverHook {
     private static final ExtentReports extent = ExtentManager.getInstance();
     private static final Logger logger = LoggerFactory.getLogger(DriverHook.class);
     private static final String LOG_SEPARATOR = "========================================";
+    private final TestContext testContext;
+
+    public DriverHook(TestContext testContext) {
+        this.testContext = testContext;
+    }
 
     @Before
     public void setUp(Scenario scenario) {
@@ -43,6 +49,13 @@ public class DriverHook {
         logger.info("Scenario Status: {}", scenario.getStatus());
         logger.info("Finished Scenario: {}", scenario.getName());
         logger.info(LOG_SEPARATOR);
+        
+        // Clean up scenario context to prevent data leakage in parallel execution
+        testContext.getScenarioContext().clear();
+        
+        // Clean up thread-local resources to prevent memory leaks in parallel execution
+        utils.TestDataFactory.cleanup();
+        
         DriverManager.quitDriver();
     }
 
