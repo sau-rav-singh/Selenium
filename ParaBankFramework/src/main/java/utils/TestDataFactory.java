@@ -65,8 +65,7 @@ public class TestDataFactory {
     }
 
     public static UserRegistrationData generateUserRegistrationData() {
-        return UserRegistrationData.builder().firstName(generateFirstName()).lastName(generateLastName()).address(generateAddress()).city(generateCity()).state(generateState()).zipCode(generateZipCode()).phoneNumber(generatePhoneNumber()).ssn(generateSSN()).username(generateUniqueUsername()).password(generatePassword()).repeatPassword(null) // Will be set separately
-                .build();
+        return UserRegistrationData.builder().firstName(generateFirstName()).lastName(generateLastName()).address(generateAddress()).city(generateCity()).state(generateState()).zipCode(generateZipCode()).phoneNumber(generatePhoneNumber()).ssn(generateSSN()).username(generateUniqueUsername()).password(generatePassword()).repeatPassword(null).build();
     }
 
     public static void cleanup() {
