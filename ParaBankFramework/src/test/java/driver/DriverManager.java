@@ -1,24 +1,25 @@
 package driver;
 
-import lombok.Getter;
 import org.openqa.selenium.WebDriver;
 import utils.ConfigReader;
 
 public class DriverManager {
-    @Getter
-    private static WebDriver driver;
+    private static ThreadLocal<WebDriver> driver = new ThreadLocal<>();
+
+    public static WebDriver getDriver() {
+        return driver.get();
+    }
 
     public static void createDriver() {
-        if (driver == null) {
-            String browser = ConfigReader.getBrowser();
-            driver = DriverFactory.createDriver(browser);
+        if (driver.get() == null) {
+            driver.set(DriverFactory.createDriver(ConfigReader.getBrowser()));
         }
     }
 
     public static void quitDriver() {
-        if (driver != null) {
-            driver.quit();
-            driver = null;
+        if (driver.get() != null) {
+            driver.get().quit();
+            driver.remove();
         }
     }
 }
